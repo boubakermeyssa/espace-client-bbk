@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test documents — Espace client BBK</title>
+  <style>
+    :root {
+      color: #202020;
+      background: #f7f5f1;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .status {
+      margin: 1rem 0;
+      color: #555;
+    }
+
+    .status.error {
+      padding: 1rem;
+      border: 1px solid #b42318;
+      color: #b42318;
+      background: #fff;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      background: #fff;
+      border: 1px solid #ddd;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th,
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid #e5e5e5;
+      vertical-align: top;
+    }
+
+    th {
+      color: #555;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    a {
+      color: #8a6844;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Documents Airtable</h1>
+    <p id="status" class="status" role="status">Chargement des documents…</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Client</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Lien</th>
+          </tr>
+        </thead>
+        <tbody id="documents-body"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const statusElement = document.getElementById("status");
+    const documentsBody = document.getElementById("documents-body");
+
+    function addCell(row, value) {
+      const cell = document.createElement("td");
+      cell.textContent = value || "—";
+      row.appendChild(cell);
+      return cell;
+    }
+
+    function addDocumentRow(documentData) {
+      const row = document.createElement("tr");
+      addCell(row, documentData.nom);
+      addCell(row, documentData.client);
+      addCell(row, documentData.type);
+      addCell(row, documentData.date);
+
+      const linkCell = document.createElement("td");
+      if (documentData.url) {
+        const link = document.createElement("a");
+        link.href = documentData.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Ouvrir";
+        linkCell.appendChild(link);
+      } else {
+        linkCell.textContent = "—";
+      }
+      row.appendChild(linkCell);
+      documentsBody.appendChild(row);
+    }
+
+    async function loadDocuments() {
+      try {
+        const response = await fetch("/api/documents");
+        const payload = await response.json();
+
+        if (!response.ok) {
+          throw new Error(payload.error || "Une erreur est survenue.");
+        }
+
+        payload.forEach(addDocumentRow);
+        statusElement.textContent = payload.length
+          ? `${payload.length} document(s) chargé(s).`
+          : "Aucun document trouvé.";
+      } catch (error) {
+        statusElement.className = "status error";
+        statusElement.textContent =
+          error.message || "Impossible de charger les documents.";
+      }
+    }
+
+    loadDocuments();
+  </script>
+</body>
+</html>

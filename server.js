@@ -329,7 +329,80 @@ async function getClientDocuments(client) {
     });
 }
 
-// Middleware de protection d'accès
+async function createAirtableRecord(tableName, fields) {
+  let token, baseId;
+  try {
+    const config = getAirtableConfig();
+    token = config.token;
+    baseId = config.baseId;
+  } catch (err) {
+    if (err.code === "MISSING_AIRTABLE_CONFIG") {
+      return null;
+    }
+    throw err;
+  }
+
+  const url = `${AIRTABLE_API_URL}/${encodeURIComponent(baseId)}/${encodeURIComponent(tableName)}`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ fields }),
+  });
+
+  if (!response.ok) {
+    const error = new Error(`Airtable creation direct status ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return await response.json();
+}
+
+async function deleteAirtableRecord(tableName, recordId) {
+  let token, baseId;
+  try {
+    const config = getAirtableConfig();
+    token = config.token;
+    baseId = config.baseId;
+  } catch (err) {
+    if (err.code === "MISSING_AIRTABLE_CONFIG") {
+      return null;
+    }
+    throw err;
+  }
+
+  const url = `${AIRTABLE_API_URL}/${encodeURIComponent(baseId)}/${encodeURIComponent(tableName)}/${encodeURIComponent(recordId)}`;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = new Error(`Airtable deletion error status ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return await response.json();
+}
+
+// Middleware de protection Admin
+function requireAdminAuth(req, res, next) {
+  if (req.session && req.session.admin) {
+    return next();
+  }
+  if (req.path.startsWith("/api/")) {
+    return res.status(401).json({ error: "Non autorisé. Veuillez vous connecter en tant qu'administrateur." });
+  }
+  return res.redirect("/admin/login");
+}
+
+// Middleware de protection d'accès Client
 function requireAuth(req, res, next) {
   if (req.session && req.session.client) {
     return next();
@@ -343,7 +416,7 @@ function requireAuth(req, res, next) {
 // Fichiers statiques
 app.use(express.static(PUBLIC_DIR));
 
-// Session courante : /api/me
+// Session client courante : /api/me
 app.get("/api/me", (req, res) => {
   if (req.session && req.session.client) {
     return res.json({ loggedIn: true, client: req.session.client });
@@ -351,7 +424,15 @@ app.get("/api/me", (req, res) => {
   return res.json({ loggedIn: false });
 });
 
-// Lot 3 : Connexion (email + code)
+// Session admin courante : /api/admin/me
+app.get("/api/admin/me", (req, res) => {
+  if (req.session && req.session.admin) {
+    return res.json({ loggedIn: true, admin: req.session.admin });
+  }
+  return res.json({ loggedIn: false });
+});
+
+// Lot 3 : Connexion Client (email + code)
 app.post("/api/login", async (req, res) => {
   const { email, code } = req.body || {};
 
@@ -373,7 +454,7 @@ app.post("/api/login", async (req, res) => {
       client: { nom: client.nom, email: client.email },
     });
   } catch (error) {
-    console.error("Erreur lors de la connexion :", error);
+    console.error("Erreur lors de la connexion client :", error);
 
     if (error.code === "MISSING_AIRTABLE_CONFIG") {
       return res.status(500).json({
@@ -387,7 +468,21 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// Lot 3 : Déconnexion
+// Lot 5 : Connexion Admin Back-Office
+app.post("/api/admin/login", (req, res) => {
+  const { email, password } = req.body || {};
+  const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@agence-bbk.fr";
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "bbk_admin_2026";
+
+  if ((email || "").trim().toLowerCase() === ADMIN_EMAIL.toLowerCase() && (password || "").trim() === ADMIN_PASSWORD) {
+    req.session.admin = { email: ADMIN_EMAIL, role: "admin" };
+    return res.json({ ok: true, message: "Connexion administration réussie." });
+  }
+
+  return res.status(401).json({ error: "Identifiants administrateur incorrects." });
+});
+
+// Lot 3 & 5 : Déconnexion
 function handleLogout(req, res) {
   req.session.destroy((err) => {
     if (err) {
@@ -405,7 +500,7 @@ app.post("/api/logout", handleLogout);
 app.get("/logout", handleLogout);
 app.get("/api/logout", handleLogout);
 
-// Route d'accès à la page de connexion
+// Route d'accès à la page de connexion client
 app.get("/login", (req, res) => {
   if (req.session && req.session.client) {
     return res.redirect("/espace-client");
@@ -413,10 +508,24 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, "login.html"));
 });
 
+// Route d'accès à la page de connexion admin
+app.get("/admin/login", (req, res) => {
+  if (req.session && req.session.admin) {
+    return res.redirect("/backoffice");
+  }
+  res.sendFile(path.join(PUBLIC_DIR, "admin-login.html"));
+});
+
 // Lot 4 : Espace client protégé
 app.get("/espace-client", requireAuth, (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, "espace-client.html"));
 });
+
+// Lot 5 : Back-Office Agence protégé
+app.get("/backoffice", requireAdminAuth, (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, "backoffice.html"));
+});
+app.get("/admin", (req, res) => res.redirect("/backoffice"));
 
 // Lot 4 : API documents du client connecté
 app.get("/api/client/documents", requireAuth, async (req, res) => {
@@ -435,6 +544,136 @@ app.get("/api/client/documents", requireAuth, async (req, res) => {
     return res.status(502).json({
       error: "Impossible de récupérer vos documents depuis Airtable.",
     });
+  }
+});
+
+// Lot 5 : API Admin — Liste de tous les clients
+app.get("/api/admin/clients", requireAdminAuth, async (req, res) => {
+  try {
+    let clientRecords;
+    try {
+      clientRecords = await fetchAirtableRecords("Clients");
+    } catch (err) {
+      if (err.code === "MISSING_AIRTABLE_CONFIG") {
+        return res.json(DEMO_CLIENTS);
+      }
+      throw err;
+    }
+
+    const clients = clientRecords.map((record) => {
+      const fields = record.fields || {};
+      return {
+        id: record.id,
+        nom: getFieldValue(fields, "Nom", "nom", "Société") || "Client sans nom",
+        email: getFieldValue(fields, "Email", "email", "E-mail") || "Non renseigné",
+        code: getFieldValue(fields, "Code d'accès", "Code d'acces", "Code", "code") || "••••",
+      };
+    });
+
+    res.json(clients);
+  } catch (error) {
+    console.error("Erreur récupération clients admin :", error);
+    res.status(500).json({ error: "Impossible de récupérer la liste des clients." });
+  }
+});
+
+// Lot 5 : API Admin — Création d'un client
+app.post("/api/admin/clients", requireAdminAuth, async (req, res) => {
+  const { nom, email, code } = req.body || {};
+
+  if (!nom || !email || !code) {
+    return res.status(400).json({ error: "Le nom, l'email et le code d'accès sont requis." });
+  }
+
+  try {
+    const fields = {
+      "Nom": nom.trim(),
+      "Email": email.trim().toLowerCase(),
+      "Code d'accès": code.trim(),
+    };
+
+    const result = await createAirtableRecord("Clients", fields);
+
+    if (!result) {
+      // Demo fallback mode
+      const newDemoClient = {
+        id: "rec_demo_" + Date.now(),
+        nom: nom.trim(),
+        email: email.trim().toLowerCase(),
+        code: code.trim(),
+      };
+      DEMO_CLIENTS.push(newDemoClient);
+      return res.json({ ok: true, client: newDemoClient, demo: true });
+    }
+
+    return res.json({ ok: true, client: { id: result.id, nom, email, code } });
+  } catch (error) {
+    console.error("Erreur création client admin :", error);
+    res.status(500).json({ error: "Erreur lors de la création du client dans Airtable." });
+  }
+});
+
+// Lot 5 : API Admin — Dépôt / Création d'un document
+app.post("/api/admin/documents", requireAdminAuth, async (req, res) => {
+  const { nom, clientId, type, date, url } = req.body || {};
+
+  if (!nom || !clientId) {
+    return res.status(400).json({ error: "Le nom du document et le client destinataire sont requis." });
+  }
+
+  try {
+    const fields = {
+      "Nom": nom.trim(),
+      "Client": [clientId],
+      "Type": type || "Autre",
+      "Date de dépôt": date || new Date().toISOString().split("T")[0],
+      "Lien Drive": url || "",
+    };
+
+    const result = await createAirtableRecord("Documents", fields);
+
+    if (!result) {
+      // Demo fallback mode
+      const clientObj = DEMO_CLIENTS.find((c) => c.id === clientId || c.nom === clientId) || { nom: clientId };
+      const newDemoDoc = {
+        id: "doc_" + Date.now(),
+        nom: nom.trim(),
+        client: clientObj.nom,
+        type: type || "Autre",
+        date: date || new Date().toISOString().split("T")[0],
+        url: url || "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      };
+      DEMO_DOCUMENTS.unshift(newDemoDoc);
+      return res.json({ ok: true, document: newDemoDoc, demo: true });
+    }
+
+    return res.json({ ok: true, message: "Document déposé avec succès." });
+  } catch (error) {
+    console.error("Erreur dépôt document admin :", error);
+    res.status(500).json({ error: "Erreur lors du dépôt du document dans Airtable." });
+  }
+});
+
+// Lot 5 : API Admin — Suppression d'un document
+app.delete("/api/admin/documents/:id", requireAdminAuth, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await deleteAirtableRecord("Documents", id);
+
+    if (!result) {
+      // Demo fallback mode
+      const idx = DEMO_DOCUMENTS.findIndex((d) => d.id === id);
+      if (idx !== -1) {
+        DEMO_DOCUMENTS.splice(idx, 1);
+      }
+      return res.json({ ok: true, message: "Document supprimé." });
+    }
+
+    return res.json({ ok: true, message: "Document supprimé dans Airtable." });
+  } catch (error) {
+    console.error("Erreur suppression document admin :", error);
+    res.status(500).json({ error: "Erreur lors de la suppression du document." });
   }
 });
 
@@ -470,4 +709,5 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Espace client BBK en ligne sur http://localhost:${PORT}`);
 });
+
 

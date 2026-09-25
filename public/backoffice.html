@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Back-Office Agence — Dépôt & Gestion des Accès BBK</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Polices Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind via CDN + Système de design UI Kit Dark Neon -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              DEFAULT: "#0D0D0F",
+              card: "#18181C",
+              cardHover: "#202026",
+              surface: "#141417",
+              border: "rgba(255, 255, 255, 0.08)",
+            },
+            lime: {
+              DEFAULT: "#B5F73B",
+              hover: "#A2E627",
+              soft: "rgba(181, 247, 59, 0.12)",
+              border: "rgba(181, 247, 59, 0.25)",
+            }
+          },
+          fontFamily: {
+            sans: ['"Outfit"', '"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="min-h-screen bg-dark font-sans text-white antialiased selection:bg-lime selection:text-black">
+
+  <!-- NAVIGATION BACK-OFFICE -->
+  <header class="sticky top-0 z-50 border-b border-white/10 bg-dark/90 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      
+      <a href="/" class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime font-display text-xs font-black tracking-wider text-black shadow-lg shadow-lime/20">
+          BBK
+        </span>
+        <div class="flex flex-col">
+          <span class="font-display text-xl font-bold tracking-tight text-white leading-none">
+            Back-Office <span class="text-lime">Agence</span>
+          </span>
+          <span class="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Gestion Dépôts & Clients</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <div class="hidden items-center gap-3 border-r border-white/10 pr-6 text-right sm:flex">
+          <div>
+            <p class="font-display text-sm font-bold text-white">Équipe Agence BBK</p>
+            <p id="admin-email" class="text-xs text-lime">admin@agence-bbk.fr</p>
+          </div>
+          <span class="rounded-full bg-lime/20 px-3 py-1 text-xs font-bold text-lime border border-lime/30">Admin</span>
+        </div>
+
+        <button id="logout-btn"
+                class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-300 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400">
+          <span>Déconnexion</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="mx-auto max-w-7xl px-6 py-10">
+
+    <!-- En-tête -->
+    <div class="mb-10 flex flex-col justify-between gap-6 border-b border-white/10 pb-8 md:flex-row md:items-end">
+      <div>
+        <span class="rounded-full bg-lime/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-lime border border-lime/20">Lot 5 — Back-Office Agence</span>
+        <h1 class="mt-3 font-display text-4xl font-extrabold text-white md:text-5xl">
+          Gestion des Dépôts & Accès
+        </h1>
+        <p class="mt-2 text-sm text-slate-400">
+          Déposez des documents pour vos clients et gérez la liste des codes d'accès.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="/espace-client" target="_blank"
+           class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-dark-card px-5 py-3 text-xs font-bold uppercase tracking-wider text-slate-200 transition hover:border-lime hover:text-lime">
+          <span>Prévisualiser l'Espace Client ↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Onglets de Navigation Back-Office -->
+    <div class="mb-10 flex flex-wrap items-center gap-3 border-b border-white/10 pb-4">
+      <button id="tab-btn-deposit" class="tab-btn active rounded-full bg-lime px-6 py-3 font-display text-xs font-extrabold uppercase tracking-wider text-black shadow-lg shadow-lime/20 transition">
+        📁 Déposer un Document
+      </button>
+      <button id="tab-btn-clients" class="tab-btn rounded-full border border-white/10 bg-dark-card px-6 py-3 font-display text-xs font-bold uppercase tracking-wider text-slate-300 transition hover:border-lime hover:text-white">
+        👥 Accès Clients (<span id="count-clients">—</span>)
+      </button>
+      <button id="tab-btn-documents" class="tab-btn rounded-full border border-white/10 bg-dark-card px-6 py-3 font-display text-xs font-bold uppercase tracking-wider text-slate-300 transition hover:border-lime hover:text-white">
+        🗃️ Tous les Documents (<span id="count-docs">—</span>)
+      </button>
+    </div>
+
+    <!-- TAB 1 : FORMULAIRE DE DÉPÔT DE DOCUMENT -->
+    <div id="tab-deposit" class="tab-content">
+      <div class="max-w-3xl rounded-3xl border border-white/10 bg-dark-card p-8 shadow-2xl space-y-6">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-lime">Nouveau livrable</span>
+          <h2 class="mt-1 font-display text-2xl font-bold text-white">Déposer un document pour un client</h2>
+          <p class="text-xs text-slate-400">Le document apparaîtra immédiatement sur l'espace privé du client sélectionné.</p>
+        </div>
+
+        <form id="deposit-form" class="space-y-5" novalidate>
+          <div>
+            <label for="select-client" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
+              1. Sélectionner le Client Destinataire
+            </label>
+            <select id="select-client" required
+                    class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white outline-none focus:border-lime focus:ring-1 focus:ring-lime">
+              <option value="">Chargement de la liste des clients...</option>
+            </select>
+          </div>
+
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label for="doc-nom" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                2. Nom du Document
+              </label>
+              <input id="doc-nom" type="text" required
+                     placeholder="Ex: Brief Campagne Printemps 2026"
+                     class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white placeholder-slate-500 outline-none focus:border-lime focus:ring-1 focus:ring-lime" />
+            </div>
+
+            <div>
+              <label for="doc-type" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                3. Type de Document
+              </label>
+              <select id="doc-type" required
+                      class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white outline-none focus:border-lime focus:ring-1 focus:ring-lime">
+                <option value="Brief">Brief</option>
+                <option value="Visuel">Visuel / Média</option>
+                <option value="Facture">Facture / Devis</option>
+                <option value="Planning">Planning / Rétroplanning</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label for="doc-date" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                4. Date de Dépôt
+              </label>
+              <input id="doc-date" type="date" required
+                     class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white outline-none focus:border-lime focus:ring-1 focus:ring-lime" />
+            </div>
+
+            <div>
+              <label for="doc-url" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
+                5. Lien du Fichier / Lien Google Drive (Optionnel)
+              </label>
+              <input id="doc-url" type="url"
+                     placeholder="https://drive.google.com/file/..."
+                     class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white placeholder-slate-500 outline-none focus:border-lime focus:ring-1 focus:ring-lime" />
+            </div>
+          </div>
+
+          <button type="submit"
+                  class="w-full rounded-full bg-lime py-4 font-display text-xs font-extrabold uppercase tracking-wider text-black shadow-xl shadow-lime/20 hover:bg-white transition">
+            ✓ Publier et déposer le document
+          </button>
+
+          <div id="deposit-msg" class="hidden rounded-2xl p-4 text-center text-xs font-bold" role="status"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 2 : GESTION DES CLIENTS ET ACCÈS -->
+    <div id="tab-clients" class="tab-content hidden space-y-8">
+      
+      <!-- Formulaire d'ajout client -->
+      <div class="max-w-3xl rounded-3xl border border-white/10 bg-dark-card p-8 space-y-6">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-lime">Nouveau Client</span>
+          <h2 class="mt-1 font-display text-2xl font-bold text-white">Ajouter un accès client</h2>
+          <p class="text-xs text-slate-400">Créez un compte d'accès pour transmettre à vos nouveaux clients.</p>
+        </div>
+
+        <form id="add-client-form" class="grid gap-5 md:grid-cols-3" novalidate>
+          <div>
+            <label for="client-nom" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">Société / Nom</label>
+            <input id="client-nom" type="text" required placeholder="Ex: Maison Dior"
+                   class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3 text-xs text-white placeholder-slate-500 outline-none focus:border-lime" />
+          </div>
+
+          <div>
+            <label for="client-email-input" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">Email de contact</label>
+            <input id="client-email-input" type="email" required placeholder="contact@dior.com"
+                   class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3 text-xs text-white placeholder-slate-500 outline-none focus:border-lime" />
+          </div>
+
+          <div>
+            <label for="client-code-input" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">Code d'accès</label>
+            <input id="client-code-input" type="text" required placeholder="dior2026"
+                   class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3 text-xs text-white placeholder-slate-500 outline-none focus:border-lime" />
+          </div>
+
+          <div class="md:col-span-3">
+            <button type="submit" class="w-full rounded-full bg-white py-3.5 font-display text-xs font-extrabold uppercase tracking-wider text-black hover:bg-lime transition">
+              + Ajouter le client à la base
+            </button>
+            <div id="client-msg" class="hidden mt-3 rounded-2xl p-3 text-center text-xs font-bold"></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Liste des clients enregistrés -->
+      <div class="rounded-3xl border border-white/10 bg-dark-card p-6 shadow-2xl">
+        <h3 class="mb-4 font-display text-lg font-bold text-white">Liste des Clients Enregistrés</h3>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="border-b border-white/10 bg-dark-surface font-display text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <tr>
+                <th class="p-4">ID Airtable</th>
+                <th class="p-4">Société / Client</th>
+                <th class="p-4">Email d'accès</th>
+                <th class="p-4">Code d'accès</th>
+              </tr>
+            </thead>
+            <tbody id="clients-table-body" class="divide-y divide-white/5 text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 3 : GESTION DE TOUS LES DOCUMENTS -->
+    <div id="tab-documents" class="tab-content hidden space-y-6">
+      
+      <div class="rounded-3xl border border-white/10 bg-dark-card p-6 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display text-lg font-bold text-white">Tous les Documents Déposés</h3>
+          <span id="docs-counter-badge" class="rounded-full bg-lime/10 px-3 py-1 text-xs font-bold text-lime border border-lime/20">— docs</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="border-b border-white/10 bg-dark-surface font-display text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <tr>
+                <th class="p-4">Document</th>
+                <th class="p-4">Client Destinataire</th>
+                <th class="p-4">Type</th>
+                <th class="p-4">Date</th>
+                <th class="p-4">Action</th>
+              </tr>
+            </thead>
+            <tbody id="all-docs-table-body" class="divide-y divide-white/5 text-slate-200"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    let clientsData = [];
+    let documentsData = [];
+
+    // Sélecteurs
+    const selectClient = document.getElementById("select-client");
+    const depositForm = document.getElementById("deposit-form");
+    const depositMsg = document.getElementById("deposit-msg");
+    
+    const addClientForm = document.getElementById("add-client-form");
+    const clientMsg = document.getElementById("client-msg");
+
+    const countClients = document.getElementById("count-clients");
+    const countDocs = document.getElementById("count-docs");
+    const clientsTableBody = document.getElementById("clients-table-body");
+    const allDocsTableBody = document.getElementById("all-docs-table-body");
+    const docsCounterBadge = document.getElementById("docs-counter-badge");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    // Gestion des Onglets
+    const tabs = {
+      deposit: document.getElementById("tab-deposit"),
+      clients: document.getElementById("tab-clients"),
+      documents: document.getElementById("tab-documents"),
+    };
+
+    const tabBtns = {
+      deposit: document.getElementById("tab-btn-deposit"),
+      clients: document.getElementById("tab-btn-clients"),
+      documents: document.getElementById("tab-btn-documents"),
+    };
+
+    function switchTab(name) {
+      Object.keys(tabs).forEach(key => {
+        if (key === name) {
+          tabs[key].classList.remove("hidden");
+          tabBtns[key].className = "tab-btn active rounded-full bg-lime px-6 py-3 font-display text-xs font-extrabold uppercase tracking-wider text-black shadow-lg shadow-lime/20 transition";
+        } else {
+          tabs[key].classList.add("hidden");
+          tabBtns[key].className = "tab-btn rounded-full border border-white/10 bg-dark-card px-6 py-3 font-display text-xs font-bold uppercase tracking-wider text-slate-300 transition hover:border-lime hover:text-white";
+        }
+      });
+    }
+
+    tabBtns.deposit.addEventListener("click", () => switchTab("deposit"));
+    tabBtns.clients.addEventListener("click", () => switchTab("clients"));
+    tabBtns.documents.addEventListener("click", () => switchTab("documents"));
+
+    // Initialiser la date d'aujourd'hui
+    document.getElementById("doc-date").value = new Date().toISOString().split("T")[0];
+
+    // Vérifier l'authentification Admin
+    async function checkAdminAuth() {
+      try {
+        const res = await fetch("/api/admin/me");
+        const data = await res.json();
+        if (!data || !data.loggedIn) {
+          window.location.href = "/admin/login";
+          return false;
+        }
+        return true;
+      } catch (e) {
+        window.location.href = "/admin/login";
+        return false;
+      }
+    }
+
+    // Charger les clients depuis l'API Admin
+    async function loadClients() {
+      try {
+        const res = await fetch("/api/admin/clients");
+        const data = await res.json();
+
+        clientsData = Array.isArray(data) ? data : [];
+        countClients.textContent = clientsData.length;
+
+        // Remplir le sélecteur du formulaire de dépôt
+        selectClient.innerHTML = `<option value="">-- Choisir un client (${clientsData.length}) --</option>` +
+          clientsData.map(c => `<option value="${c.id}">${c.nom} (${c.email})</option>`).join("");
+
+        // Remplir le tableau des clients
+        clientsTableBody.innerHTML = clientsData.map(c => `
+          <tr class="hover:bg-white/[0.02] transition">
+            <td class="p-4 font-mono text-slate-500">${c.id}</td>
+            <td class="p-4 font-display font-bold text-white">${c.nom}</td>
+            <td class="p-4 text-slate-300">${c.email}</td>
+            <td class="p-4 font-mono text-lime font-bold bg-white/5 rounded-lg px-2 py-1">${c.code}</td>
+          </tr>
+        `).join("");
+      } catch (e) {
+        console.error("Erreur chargement clients :", e);
+      }
+    }
+
+    // Charger tous les documents
+    async function loadAllDocuments() {
+      try {
+        const res = await fetch("/api/documents");
+        const data = await res.json();
+
+        documentsData = Array.isArray(data) ? data : [];
+        countDocs.textContent = documentsData.length;
+        docsCounterBadge.textContent = `${documentsData.length} documents`;
+
+        allDocsTableBody.innerHTML = documentsData.map(d => `
+          <tr class="hover:bg-white/[0.02] transition">
+            <td class="p-4 font-display font-bold text-white">${d.nom}</td>
+            <td class="p-4 text-lime font-bold">${d.client || "Global"}</td>
+            <td class="p-4"><span class="rounded-full bg-white/10 border border-white/10 px-3 py-1 text-[10px] font-bold text-slate-300">${d.type}</span></td>
+            <td class="p-4 font-mono text-slate-400">${d.date || "—"}</td>
+            <td class="p-4">
+              <div class="flex items-center gap-2">
+                ${d.url ? `<a href="${d.url}" target="_blank" class="rounded-full bg-lime/20 border border-lime/30 px-3 py-1 text-[10px] font-bold text-lime hover:bg-lime hover:text-black">Ouvrir ↗</a>` : "—"}
+                ${d.id ? `<button onclick="deleteDoc('${d.id}')" class="rounded-full bg-red-500/10 border border-red-500/30 px-3 py-1 text-[10px] font-bold text-red-400 hover:bg-red-500 hover:text-white">Supprimer</button>` : ""}
+              </div>
+            </td>
+          </tr>
+        `).join("");
+      } catch (e) {
+        console.error("Erreur chargement documents :", e);
+      }
+    }
+
+    // Soumission du formulaire de dépôt de document
+    depositForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      depositMsg.classList.add("hidden");
+
+      const clientId = selectClient.value;
+      const nom = document.getElementById("doc-nom").value.trim();
+      const type = document.getElementById("doc-type").value;
+      const date = document.getElementById("doc-date").value;
+      const url = document.getElementById("doc-url").value.trim();
+
+      if (!clientId || !nom) {
+        depositMsg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+        depositMsg.textContent = "Veuillez choisir un client et entrer un nom de document.";
+        depositMsg.classList.remove("hidden");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/admin/documents", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ clientId, nom, type, date, url })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          depositMsg.className = "mt-4 rounded-2xl bg-lime/10 border border-lime/30 p-3 text-center text-xs font-bold text-lime";
+          depositMsg.textContent = "✓ Document déposé avec succès !";
+          depositMsg.classList.remove("hidden");
+
+          document.getElementById("doc-nom").value = "";
+          document.getElementById("doc-url").value = "";
+
+          loadAllDocuments();
+        } else {
+          depositMsg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+          depositMsg.textContent = data.error || "Erreur lors du dépôt.";
+          depositMsg.classList.remove("hidden");
+        }
+      } catch (err) {
+        depositMsg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+        depositMsg.textContent = "Erreur de connexion serveur.";
+        depositMsg.classList.remove("hidden");
+      }
+    });
+
+    // Soumission du formulaire d'ajout client
+    addClientForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clientMsg.classList.add("hidden");
+
+      const nom = document.getElementById("client-nom").value.trim();
+      const email = document.getElementById("client-email-input").value.trim();
+      const code = document.getElementById("client-code-input").value.trim();
+
+      if (!nom || !email || !code) {
+        clientMsg.className = "rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+        clientMsg.textContent = "Veuillez remplir tous les champs du client.";
+        clientMsg.classList.remove("hidden");
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/admin/clients", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nom, email, code })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          clientMsg.className = "rounded-2xl bg-lime/10 border border-lime/30 p-3 text-center text-xs font-bold text-lime";
+          clientMsg.textContent = `✓ Client "${nom}" créé avec succès !`;
+          clientMsg.classList.remove("hidden");
+
+          document.getElementById("client-nom").value = "";
+          document.getElementById("client-email-input").value = "";
+          document.getElementById("client-code-input").value = "";
+
+          loadClients();
+        } else {
+          clientMsg.className = "rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+          clientMsg.textContent = data.error || "Erreur création client.";
+          clientMsg.classList.remove("hidden");
+        }
+      } catch (err) {
+        clientMsg.className = "rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+        clientMsg.textContent = "Erreur de connexion serveur.";
+        clientMsg.classList.remove("hidden");
+      }
+    });
+
+    // Suppression d'un document
+    async function deleteDoc(docId) {
+      if (!confirm("Voulez-vous vraiment supprimer ce document ?")) return;
+
+      try {
+        const res = await fetch(`/api/admin/documents/${docId}`, { method: "DELETE" });
+        if (res.ok) {
+          loadAllDocuments();
+        }
+      } catch (e) {
+        alert("Erreur lors de la suppression.");
+      }
+    }
+
+    // Déconnexion Admin
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await fetch("/api/logout", { method: "POST" });
+      } catch (e) {}
+      window.location.href = "/admin/login";
+    });
+
+    // Chargement initial
+    document.addEventListener("DOMContentLoaded", async () => {
+      const auth = await checkAdminAuth();
+      if (auth) {
+        loadClients();
+        loadAllDocuments();
+      }
+    });
+  </script>
+</body>
+</html>

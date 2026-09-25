@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration Back-Office — Agence BBK</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Polices Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind via CDN + Système de design UI Kit Dark Neon -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              DEFAULT: "#0D0D0F",
+              card: "#18181C",
+              surface: "#141417",
+            },
+            lime: {
+              DEFAULT: "#B5F73B",
+              soft: "rgba(181, 247, 59, 0.12)",
+              border: "rgba(181, 247, 59, 0.25)",
+            }
+          },
+          fontFamily: {
+            sans: ['"Outfit"', '"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="min-h-screen bg-dark font-sans text-white antialiased flex items-center justify-center p-6 selection:bg-lime selection:text-black">
+
+  <div class="w-full max-w-md rounded-3xl border border-white/10 bg-dark-card p-8 shadow-2xl space-y-6 sm:p-10 relative">
+    
+    <!-- Ambient Glow -->
+    <div class="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime/10 blur-[100px]"></div>
+
+    <div class="text-center">
+      <a href="/" class="inline-flex items-center gap-3 mb-6">
+        <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime text-black font-display font-black text-xs shadow-lg shadow-lime/20">
+          BBK
+        </span>
+        <span class="font-display text-xl font-bold text-white">Back-Office Agence</span>
+      </a>
+
+      <div class="mt-2">
+        <span class="rounded-full bg-lime/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-lime border border-lime/20">Administration</span>
+        <h1 class="mt-3 font-display text-3xl font-extrabold text-white">Connexion Agency</h1>
+        <p class="mt-1 text-xs text-slate-400">
+          Réservé aux membres de l'équipe de l'Agence BBK.
+        </p>
+      </div>
+    </div>
+
+    <form id="admin-login-form" class="space-y-5" novalidate>
+      <div>
+        <label for="email" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
+          Email Administrateur
+        </label>
+        <input id="email" name="email" type="email" required
+               value="admin@agence-bbk.fr"
+               class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white placeholder-slate-500 outline-none transition focus:border-lime focus:ring-1 focus:ring-lime" />
+      </div>
+
+      <div>
+        <label for="password" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
+          Mot de passe
+        </label>
+        <input id="password" name="password" type="password" required
+               placeholder="••••••••"
+               class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white placeholder-slate-500 outline-none transition focus:border-lime focus:ring-1 focus:ring-lime" />
+      </div>
+
+      <button type="submit"
+              class="w-full rounded-full bg-lime py-4 font-display text-xs font-extrabold uppercase tracking-wider text-black shadow-xl shadow-lime/20 transition duration-300 hover:bg-white hover:scale-[1.01]">
+        Accéder au Back-Office
+      </button>
+
+      <div id="form-message" class="hidden rounded-2xl p-3 text-center text-xs font-bold" role="status"></div>
+    </form>
+
+    <div class="border-t border-white/10 pt-6 text-center text-xs text-slate-400">
+      <a href="/" class="inline-flex items-center gap-2 font-bold text-slate-400 hover:text-white transition">
+        <span>← Retour au site public</span>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    const form = document.getElementById("admin-login-form");
+    const msg = document.getElementById("form-message");
+    const submitBtn = form.querySelector("button[type='submit']");
+
+    // Redirection si déjà admin
+    fetch("/api/admin/me")
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.loggedIn) {
+          window.location.href = "/backoffice";
+        }
+      });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.classList.add("hidden");
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        msg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+        msg.textContent = "Veuillez saisir l'email et le mot de passe.";
+        msg.classList.remove("hidden");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "AUTHENTIFICATION...";
+
+      try {
+        const response = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.ok) {
+          msg.className = "mt-4 rounded-2xl bg-lime/10 border border-lime/30 p-3 text-center text-xs font-bold text-lime";
+          msg.textContent = "Connexion administration réussie. Redirection...";
+          msg.classList.remove("hidden");
+          setTimeout(() => {
+            window.location.href = "/backoffice";
+          }, 400);
+        } else {
+          msg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+          msg.textContent = data.error || "Mot de passe administrateur incorrect.";
+          msg.classList.remove("hidden");
+        }
+      } catch (err) {
+        msg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
+        msg.textContent = "Erreur de connexion au serveur.";
+        msg.classList.remove("hidden");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Accéder au Back-Office";
+      }
+    });
+  </script>
+</body>
+</html>

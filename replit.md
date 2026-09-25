@@ -1,9 +1,10 @@
 # Running this project on Replit
 
-This is a Node.js 18+ Express app serving static HTML from `public/` and reading Airtable server-side. There is no build step.
+This is a Node.js 18+ Express app serving static HTML from `public/` and managing per-client document access via Airtable server-side. There is no build step.
 
 - The **Start application** workflow runs `PORT=5000 npm start` and serves the Replit web preview.
 - To run locally outside Replit, use `npm install` then `npm start` (default port 3000).
-- `/test-documents` displays all records from the Airtable `Documents` table using the server-only `/api/documents` route. The route also reads `Clients` to resolve linked client names.
-- `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` are required for the document test page. `SESSION_SECRET` is reserved for Lot 3.
-- The current login page is only a visual form; it does not authenticate users. Per-client access control and sessions are planned for Lot 3.
+- Authentication flow (Lot 3): Users authenticate via `/login` (`POST /api/login`) with email and access code against the Airtable `Clients` table. Sessions are maintained via `express-session` (`SESSION_SECRET`).
+- Client dashboard (Lot 4): Authenticated users access `/espace-client` (`GET /api/client/documents`), which filters documents specifically belonging to their client account. Includes live search, document type filtering, date sorting, and file opening.
+- `/test-documents` displays all records from Airtable for administrative inspection (`/api/documents`).
+- `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` connect to the live Airtable base. If omitted, the app falls back gracefully to a Demo mode (`demo@agence-bbk.fr` / `bbk2026`).

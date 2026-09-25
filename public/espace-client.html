@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mon Espace Client — Agence BBK</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Polices -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind via CDN + palette BBK -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            noir: "#0E0E0E",
+            "noir-card": "#161616",
+            ivoire: "#F5F1EA",
+            accent: "#B8976A",
+            "accent-dark": "#9C7C52",
+            gris: "#6B6660"
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', "serif"],
+            sans: ["Inter", "sans-serif"]
+          },
+          letterSpacing: { luxe: "0.25em" }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="min-h-screen bg-noir font-sans text-ivoire antialiased selection:bg-accent selection:text-noir">
+
+  <!-- ============ EN-TÊTE / NAVIGATION ============ -->
+  <header class="sticky top-0 z-50 border-b border-white/10 bg-noir/90 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <a href="/" class="font-serif text-2xl tracking-wide text-ivoire">
+        Agence <span class="text-accent">BBK</span>
+      </a>
+
+      <div class="flex items-center gap-4 md:gap-6">
+        <div id="user-badge" class="hidden items-center gap-3 border-r border-white/10 pr-6 text-right md:flex">
+          <div>
+            <p id="client-name" class="font-serif text-base font-medium text-ivoire">—</p>
+            <p id="client-email" class="text-xs text-ivoire/50">—</p>
+          </div>
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-accent/10 border border-accent/30 text-accent font-serif font-semibold text-sm" id="client-avatar">
+            B
+          </div>
+        </div>
+
+        <button id="logout-btn"
+                class="inline-flex items-center gap-2 border border-white/20 px-4 py-2 text-xs uppercase tracking-luxe text-ivoire/80 transition hover:border-accent hover:text-accent">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          Déconnexion
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ CONTENU PRINCIPAL ============ -->
+  <main class="mx-auto max-w-7xl px-6 py-10 md:py-14">
+
+    <!-- Hero / Entête de page -->
+    <div class="mb-10 flex flex-col justify-between gap-6 border-b border-white/10 pb-8 md:flex-row md:items-end">
+      <div>
+        <div class="mb-2 flex items-center gap-3">
+          <span class="inline-block h-2 w-2 rounded-full bg-accent animate-pulse"></span>
+          <p class="text-xs uppercase tracking-luxe text-accent">Espace Client Sécurisé</p>
+        </div>
+        <h1 class="font-serif text-4xl text-ivoire md:text-5xl">
+          Vos Documents & Projets
+        </h1>
+        <p class="mt-2 text-sm text-ivoire/60">
+          Retrouvez tous les briefs, visuels, factures et plannings déposés par l'Agence BBK.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="refresh-btn"
+                class="inline-flex items-center gap-2 rounded border border-white/15 bg-white/5 px-4 py-2.5 text-xs uppercase tracking-luxe text-ivoire/80 transition hover:bg-white/10 hover:text-accent">
+          <svg id="refresh-icon" class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Actualiser
+        </button>
+      </div>
+    </div>
+
+    <!-- Statistiques rapides -->
+    <div class="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div class="rounded border border-white/10 bg-noir-card p-5">
+        <p class="text-xs uppercase tracking-luxe text-ivoire/40">Total documents</p>
+        <p id="stat-total" class="mt-2 font-serif text-3xl text-accent">—</p>
+      </div>
+      <div class="rounded border border-white/10 bg-noir-card p-5">
+        <p class="text-xs uppercase tracking-luxe text-ivoire/40">Briefs & Plannings</p>
+        <p id="stat-briefs" class="mt-2 font-serif text-3xl text-ivoire">—</p>
+      </div>
+      <div class="rounded border border-white/10 bg-noir-card p-5">
+        <p class="text-xs uppercase tracking-luxe text-ivoire/40">Factures & Devis</p>
+        <p id="stat-factures" class="mt-2 font-serif text-3xl text-ivoire">—</p>
+      </div>
+      <div class="rounded border border-white/10 bg-noir-card p-5">
+        <p class="text-xs uppercase tracking-luxe text-ivoire/40">Visuels & Médias</p>
+        <p id="stat-visuels" class="mt-2 font-serif text-3xl text-ivoire">—</p>
+      </div>
+    </div>
+
+    <!-- Barre de recherche et filtres -->
+    <div class="mb-8 flex flex-col gap-4 rounded-lg border border-white/10 bg-noir-card p-4 md:flex-row md:items-center md:justify-between">
+      
+      <!-- Recherche -->
+      <div class="relative flex-1">
+        <svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ivoire/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input id="search-input" type="text" placeholder="Rechercher par nom de document..."
+               class="w-full rounded border border-white/10 bg-noir px-4 py-2.5 pl-10 text-xs text-ivoire placeholder-ivoire/40 outline-none transition focus:border-accent" />
+      </div>
+
+      <!-- Filtres par Type -->
+      <div class="flex flex-wrap items-center gap-2" id="filter-pills">
+        <button data-type="ALL" class="pill-btn active rounded border border-accent bg-accent px-3 py-1.5 text-xs font-medium text-noir transition">
+          Tous
+        </button>
+        <button data-type="Brief" class="pill-btn rounded border border-white/15 bg-transparent px-3 py-1.5 text-xs text-ivoire/70 transition hover:border-accent hover:text-accent">
+          Briefs
+        </button>
+        <button data-type="Visuel" class="pill-btn rounded border border-white/15 bg-transparent px-3 py-1.5 text-xs text-ivoire/70 transition hover:border-accent hover:text-accent">
+          Visuels
+        </button>
+        <button data-type="Facture" class="pill-btn rounded border border-white/15 bg-transparent px-3 py-1.5 text-xs text-ivoire/70 transition hover:border-accent hover:text-accent">
+          Factures
+        </button>
+        <button data-type="Planning" class="pill-btn rounded border border-white/15 bg-transparent px-3 py-1.5 text-xs text-ivoire/70 transition hover:border-accent hover:text-accent">
+          Plannings
+        </button>
+        <button data-type="Autre" class="pill-btn rounded border border-white/15 bg-transparent px-3 py-1.5 text-xs text-ivoire/70 transition hover:border-accent hover:text-accent">
+          Autres
+        </button>
+      </div>
+
+      <!-- Tri -->
+      <div class="flex items-center gap-2 border-t border-white/10 pt-3 md:border-t-0 md:pt-0">
+        <label for="sort-select" class="whitespace-nowrap text-xs uppercase tracking-luxe text-ivoire/40">Trier par :</label>
+        <select id="sort-select" class="rounded border border-white/15 bg-noir px-3 py-2 text-xs text-ivoire outline-none transition focus:border-accent">
+          <option value="date-desc">Plus récents</option>
+          <option value="date-asc">Plus anciens</option>
+          <option value="name-asc">Nom (A-Z)</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Message de statut / Chargement -->
+    <div id="status-container" class="my-6">
+      <div id="status-loading" class="flex items-center justify-center gap-3 rounded border border-white/10 bg-noir-card py-12 text-sm text-ivoire/70">
+        <svg class="h-5 w-5 animate-spin text-accent" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Chargement de vos documents...
+      </div>
+
+      <div id="status-error" class="hidden rounded border border-red-500/30 bg-red-950/20 p-6 text-center text-sm text-red-300">
+        <p id="error-message">Impossible de charger vos documents.</p>
+        <button id="retry-btn" class="mt-4 inline-block rounded bg-red-900/50 px-4 py-2 text-xs uppercase tracking-luxe text-white hover:bg-red-900">
+          Réessayer
+        </button>
+      </div>
+    </div>
+
+    <!-- Grille de documents -->
+    <div id="documents-grid" class="hidden grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Les cartes de documents seront insérées dynamiquement ici -->
+    </div>
+
+    <!-- Etat vide -->
+    <div id="empty-state" class="hidden rounded-lg border border-dashed border-white/20 bg-noir-card/50 px-6 py-16 text-center">
+      <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-accent">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </div>
+      <h3 class="font-serif text-2xl text-ivoire">Aucun document trouvé</h3>
+      <p class="mt-2 text-sm text-ivoire/50" id="empty-description">
+        Aucun document ne correspond à vos critères de recherche.
+      </p>
+      <button id="reset-filters-btn" class="mt-6 inline-block border border-accent px-5 py-2.5 text-xs uppercase tracking-luxe text-accent transition hover:bg-accent hover:text-noir">
+        Réinitialiser les filtres
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="mt-20 border-t border-white/10 bg-noir py-8 text-center text-xs text-ivoire/40">
+    <div class="mx-auto max-w-7xl px-6 flex flex-col justify-between items-center gap-4 md:flex-row">
+      <p>Agence BBK — Espace Client Privé &bull; Île-de-France</p>
+      <p class="text-ivoire/30">
+        Besoin d'aide ? <a href="mailto:contact@agence-bbk.fr" class="text-accent underline underline-offset-4">contact@agence-bbk.fr</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============ LOGIQUE JAVASCRIPT ============ -->
+  <script>
+    let allDocuments = [];
+    let currentFilterType = "ALL";
+    let currentSearchQuery = "";
+    let currentSort = "date-desc";
+
+    // Éléments du DOM
+    const clientNameEl = document.getElementById("client-name");
+    const clientEmailEl = document.getElementById("client-email");
+    const clientAvatarEl = document.getElementById("client-avatar");
+    const logoutBtn = document.getElementById("logout-btn");
+
+    const statusLoading = document.getElementById("status-loading");
+    const statusError = document.getElementById("status-error");
+    const errorMessageEl = document.getElementById("error-message");
+    const retryBtn = document.getElementById("retry-btn");
+    
+    const documentsGrid = document.getElementById("documents-grid");
+    const emptyState = document.getElementById("empty-state");
+    const emptyDescription = document.getElementById("empty-description");
+    const searchInput = document.getElementById("search-input");
+    const sortSelect = document.getElementById("sort-select");
+    const refreshBtn = document.getElementById("refresh-btn");
+    const resetFiltersBtn = document.getElementById("reset-filters-btn");
+
+    const statTotal = document.getElementById("stat-total");
+    const statBriefs = document.getElementById("stat-briefs");
+    const statFactures = document.getElementById("stat-factures");
+    const statVisuels = document.getElementById("stat-visuels");
+
+    // Verification de la session
+    async function checkAuth() {
+      try {
+        const res = await fetch("/api/me");
+        const data = await res.json();
+
+        if (!data || !data.loggedIn) {
+          window.location.href = "/login";
+          return false;
+        }
+
+        const client = data.client || {};
+        clientNameEl.textContent = client.nom || "Mon Compte";
+        clientEmailEl.textContent = client.email || "";
+        clientAvatarEl.textContent = (client.nom || "B").charAt(0).toUpperCase();
+
+        return true;
+      } catch (e) {
+        window.location.href = "/login";
+        return false;
+      }
+    }
+
+    // Icône selon le type
+    function getTypeBadgeHTML(type) {
+      const t = (type || "").toLowerCase();
+      let colorClass = "border-amber-500/30 bg-amber-500/10 text-amber-300";
+      let icon = `
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      `;
+
+      if (t.includes("brief") || t.includes("planning")) {
+        colorClass = "border-blue-500/30 bg-blue-500/10 text-blue-300";
+      } else if (t.includes("facture") || t.includes("devis")) {
+        colorClass = "border-emerald-500/30 bg-emerald-500/10 text-emerald-300";
+      } else if (t.includes("visuel") || t.includes("image") || t.includes("créa")) {
+        colorClass = "border-purple-500/30 bg-purple-500/10 text-purple-300";
+      }
+
+      return `<span class="inline-flex items-center gap-1.5 rounded border ${colorClass} px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider">${icon} ${type || "Document"}</span>`;
+    }
+
+    // Formatage de la date
+    function formatDate(dateStr) {
+      if (!dateStr) return "Date non précisée";
+      try {
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return dateStr;
+        return date.toLocaleDateString("fr-FR", {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        });
+      } catch (e) {
+        return dateStr;
+      }
+    }
+
+    // Mise à jour des statistiques
+    function updateStats(docs) {
+      statTotal.textContent = docs.length;
+      
+      const briefsCount = docs.filter(d => {
+        const t = (d.type || "").toLowerCase();
+        return t.includes("brief") || t.includes("planning");
+      }).length;
+      
+      const facturesCount = docs.filter(d => {
+        const t = (d.type || "").toLowerCase();
+        return t.includes("facture") || t.includes("devis");
+      }).length;
+      
+      const visuelsCount = docs.filter(d => {
+        const t = (d.type || "").toLowerCase();
+        return t.includes("visuel") || t.includes("image") || t.includes("créa");
+      }).length;
+
+      statBriefs.textContent = briefsCount;
+      statFactures.textContent = facturesCount;
+      statVisuels.textContent = visuelsCount;
+    }
+
+    // Rendu des documents
+    function renderDocuments() {
+      let filtered = allDocuments.filter(doc => {
+        // Filtre par recherche
+        const matchesSearch = !currentSearchQuery || 
+          (doc.nom || "").toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+          (doc.type || "").toLowerCase().includes(currentSearchQuery.toLowerCase());
+
+        // Filtre par pilule
+        let matchesType = true;
+        if (currentFilterType !== "ALL") {
+          const docType = (doc.type || "").toLowerCase();
+          const target = currentFilterType.toLowerCase();
+          if (target === "autre") {
+            matchesType = !["brief", "visuel", "facture", "planning"].some(t => docType.includes(t));
+          } else {
+            matchesType = docType.includes(target);
+          }
+        }
+
+        return matchesSearch && matchesType;
+      });
+
+      // Tri
+      filtered.sort((a, b) => {
+        if (currentSort === "date-desc") {
+          return new Date(b.date || 0) - new Date(a.date || 0);
+        } else if (currentSort === "date-asc") {
+          return new Date(a.date || 0) - new Date(b.date || 0);
+        } else if (currentSort === "name-asc") {
+          return (a.nom || "").localeCompare(b.nom || "");
+        }
+        return 0;
+      });
+
+      // Affichage
+      if (filtered.length === 0) {
+        documentsGrid.classList.add("hidden");
+        emptyState.classList.remove("hidden");
+        if (allDocuments.length === 0) {
+          emptyDescription.textContent = "Aucun document n'a été déposé sur votre espace client pour le moment.";
+        } else {
+          emptyDescription.textContent = "Aucun document ne correspond à vos filtres actuels.";
+        }
+      } else {
+        emptyState.classList.add("hidden");
+        documentsGrid.classList.remove("hidden");
+        
+        documentsGrid.innerHTML = filtered.map(doc => `
+          <div class="group relative flex flex-col justify-between rounded-lg border border-white/10 bg-noir-card p-6 transition duration-300 hover:border-accent/50 hover:bg-white/[0.02] hover:shadow-lg hover:shadow-accent/5">
+            <div>
+              <div class="mb-4 flex items-start justify-between gap-3">
+                ${getTypeBadgeHTML(doc.type)}
+                <span class="text-xs text-ivoire/40">${formatDate(doc.date)}</span>
+              </div>
+              <h3 class="font-serif text-xl font-medium text-ivoire transition group-hover:text-accent">
+                ${doc.nom}
+              </h3>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
+              ${doc.url ? `
+                <a href="${doc.url}" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 rounded bg-accent px-4 py-2 text-xs font-medium uppercase tracking-luxe text-noir transition hover:bg-ivoire">
+                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Consulter
+                </a>
+              ` : `
+                <span class="text-xs italic text-ivoire/30">Document en cours de préparation</span>
+              `}
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    // Chargement des documents depuis l'API
+    async function loadDocuments() {
+      statusLoading.classList.remove("hidden");
+      statusError.classList.add("hidden");
+      documentsGrid.classList.add("hidden");
+      emptyState.classList.add("hidden");
+
+      try {
+        const res = await fetch("/api/client/documents");
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Impossible de récupérer vos documents.");
+        }
+
+        allDocuments = Array.isArray(data) ? data : [];
+        updateStats(allDocuments);
+        renderDocuments();
+      } catch (err) {
+        errorMessageEl.textContent = err.message || "Erreur de connexion au serveur.";
+        statusError.classList.remove("hidden");
+      } finally {
+        statusLoading.classList.add("hidden");
+      }
+    }
+
+    // Événements
+    document.addEventListener("DOMContentLoaded", async () => {
+      const authenticated = await checkAuth();
+      if (authenticated) {
+        loadDocuments();
+      }
+    });
+
+    // Recherche
+    searchInput.addEventListener("input", (e) => {
+      currentSearchQuery = e.target.value.trim();
+      renderDocuments();
+    });
+
+    // Tri
+    sortSelect.addEventListener("change", (e) => {
+      currentSort = e.target.value;
+      renderDocuments();
+    });
+
+    // Pilules de filtrage
+    document.getElementById("filter-pills").addEventListener("click", (e) => {
+      const btn = e.target.closest(".pill-btn");
+      if (!btn) return;
+
+      document.querySelectorAll(".pill-btn").forEach(b => {
+        b.className = "pill-btn rounded border border-white/15 bg-transparent px-3 py-1.5 text-xs text-ivoire/70 transition hover:border-accent hover:text-accent";
+      });
+
+      btn.className = "pill-btn active rounded border border-accent bg-accent px-3 py-1.5 text-xs font-medium text-noir transition";
+      currentFilterType = btn.dataset.type;
+      renderDocuments();
+    });
+
+    // Actualiser
+    refreshBtn.addEventListener("click", () => {
+      const icon = document.getElementById("refresh-icon");
+      icon.classList.add("animate-spin");
+      loadDocuments().finally(() => {
+        setTimeout(() => icon.classList.remove("animate-spin"), 500);
+      });
+    });
+
+    // Réinitialiser filtres
+    resetFiltersBtn.addEventListener("click", () => {
+      currentSearchQuery = "";
+      currentFilterType = "ALL";
+      currentSort = "date-desc";
+      searchInput.value = "";
+      sortSelect.value = "date-desc";
+
+      document.querySelectorAll(".pill-btn").forEach(b => {
+        if (b.dataset.type === "ALL") {
+          b.className = "pill-btn active rounded border border-accent bg-accent px-3 py-1.5 text-xs font-medium text-noir transition";
+        } else {
+          b.className = "pill-btn rounded border border-white/15 bg-transparent px-3 py-1.5 text-xs text-ivoire/70 transition hover:border-accent hover:text-accent";
+        }
+      });
+
+      renderDocuments();
+    });
+
+    // Réessayer
+    retryBtn.addEventListener("click", loadDocuments);
+
+    // Déconnexion
+    logoutBtn.addEventListener("click", async () => {
+      try {
+        await fetch("/api/logout", { method: "POST" });
+      } catch (e) {}
+      window.location.href = "/login";
+    });
+  </script>
+</body>
+</html>

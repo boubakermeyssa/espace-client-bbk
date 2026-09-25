@@ -104,12 +104,70 @@
   </div>
 
   <script>
-    // Lot 1 : on bloque l'envoi et on affiche un message d'attente.
-    document.getElementById("login-form").addEventListener("submit", (e) => {
+    const form = document.getElementById("login-form");
+    const msg = document.getElementById("form-message");
+    const submitBtn = form.querySelector("button[type='submit']");
+
+    // Redirection automatique si déjà connecté
+    fetch("/api/me")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.loggedIn) {
+          window.location.href = "/espace-client";
+        }
+      })
+      .catch(() => {});
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const msg = document.getElementById("form-message");
-      msg.textContent = "La connexion sera disponible très prochainement.";
-      msg.classList.remove("hidden");
+      msg.classList.add("hidden");
+      msg.className = "text-center text-sm text-accent mt-4";
+      
+      const email = document.getElementById("email").value;
+      const code = document.getElementById("code").value;
+
+      if (!email || !code) {
+        msg.textContent = "Veuillez remplir tous les champs.";
+        msg.classList.remove("hidden");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = "0.7";
+      submitBtn.textContent = "VÉRIFICATION EN COURS...";
+
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, code })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.ok) {
+          msg.className = "text-center text-sm text-emerald-400 mt-4";
+          msg.textContent = "Connexion réussie. Redirection...";
+          msg.classList.remove("hidden");
+          setTimeout(() => {
+            window.location.href = "/espace-client";
+          }, 400);
+        } else {
+          msg.className = "text-center text-sm text-red-400 mt-4";
+          msg.textContent = data.error || "Email ou code d'accès incorrect.";
+          msg.classList.remove("hidden");
+        }
+      } catch (err) {
+        msg.className = "text-center text-sm text-red-400 mt-4";
+        msg.textContent = "Erreur de connexion avec le serveur.";
+        msg.classList.remove("hidden");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "1";
+        submitBtn.textContent = "Accéder à mon espace";
+      }
     });
   </script>
 </body>

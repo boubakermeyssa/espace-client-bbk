@@ -6,39 +6,35 @@
   <title>Agence BBK — Communication 360° & Studio Créatif</title>
   <meta name="description" content="Agence BBK, agence de communication 360° B2B en Île-de-France. Conseil en stratégie, création de marque, contenu & événementiel." />
 
-  <!-- Polices Éditioriales Haut de Gamme -->
+  <!-- Polices ultra modernes (Outfit & Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind via CDN + Palette Éditorial Ivoire BBK -->
+  <!-- Tailwind via CDN + Système de design UI Kit Dark Neon -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            ivoire: {
-              DEFAULT: "#FAF9F6",
-              card: "#FFFFFF",
-              subtle: "#F2EFE9",
-              border: "#E7E3DA",
+            dark: {
+              DEFAULT: "#0D0D0F",
+              card: "#18181C",
+              cardHover: "#202026",
+              surface: "#141417",
+              border: "rgba(255, 255, 255, 0.08)",
             },
-            encre: {
-              DEFAULT: "#1C1917",
-              muted: "#78716C",
-              light: "#A8A29E",
-            },
-            bronze: {
-              DEFAULT: "#967240",
-              dark: "#78582F",
-              light: "#B8860B",
-              soft: "rgba(150, 114, 64, 0.08)",
+            lime: {
+              DEFAULT: "#B5F73B",
+              hover: "#A2E627",
+              soft: "rgba(181, 247, 59, 0.12)",
+              border: "rgba(181, 247, 59, 0.25)",
             }
           },
           fontFamily: {
-            display: ['"Syne"', "sans-serif"],
-            sans: ['"Plus Jakarta Sans"', "sans-serif"]
+            sans: ['"Outfit"', '"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif']
           }
         }
       }
@@ -46,52 +42,54 @@
   </script>
 </head>
 
-<body class="bg-ivoire text-encre font-sans antialiased selection:bg-encre selection:text-ivoire">
+<body class="bg-dark text-white font-sans antialiased selection:bg-lime selection:text-black">
 
-  <!-- ============ EN-TÊTE / NAVIGATION ÉDITORIALE ============ -->
-  <header class="fixed inset-x-0 top-0 z-50 border-b border-ivoire-border bg-ivoire/90 backdrop-blur-md">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+  <!-- ============ NAVIGATION DYNAMIQUE (UI KIT) ============ -->
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-dark/80 backdrop-blur-xl">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
       
-      <a href="/" class="flex items-center gap-3 group">
-        <span class="flex h-9 w-9 items-center justify-center rounded-none bg-encre font-display text-xs font-extrabold tracking-widest text-ivoire transition duration-300 group-hover:bg-bronze">
+      <a href="/" class="flex items-center gap-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime font-display text-xs font-black tracking-wider text-black shadow-lg shadow-lime/20">
           BBK
         </span>
         <div class="flex flex-col">
-          <span class="font-display text-lg font-bold tracking-tight text-encre leading-none">
-            Agence <span class="text-bronze">BBK</span>
+          <span class="font-display text-xl font-bold tracking-tight text-white leading-none">
+            Agence <span class="text-lime">BBK</span>
           </span>
-          <span class="text-[9px] uppercase tracking-[0.25em] text-encre-muted">Paris &bull; Communication 360°</span>
+          <span class="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Communication 360°</span>
         </div>
       </a>
 
-      <ul class="hidden items-center gap-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-encre-muted md:flex">
-        <li><a href="#services" class="transition hover:text-encre">Services</a></li>
-        <li><a href="#espace" class="transition hover:text-encre">Espace Client</a></li>
-        <li><a href="#contact" class="transition hover:text-encre">Contact</a></li>
+      <ul class="hidden items-center gap-8 text-xs font-semibold uppercase tracking-wider text-slate-300 md:flex">
+        <li><a href="#services" class="transition hover:text-lime">Services</a></li>
+        <li><a href="#espace" class="transition hover:text-lime">Espace Client</a></li>
+        <li><a href="#contact" class="transition hover:text-lime">Contact</a></li>
       </ul>
 
       <a href="/login"
-         class="hidden items-center gap-2 rounded-none bg-encre px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-ivoire transition duration-300 hover:bg-bronze md:inline-flex">
+         class="hidden items-center gap-2 rounded-full bg-lime px-6 py-3 font-display text-xs font-bold uppercase tracking-wider text-black shadow-xl shadow-lime/20 transition duration-300 hover:bg-white hover:scale-[1.02] md:inline-flex">
         <span>Mon Espace Privé</span>
-        <span>→</span>
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
       </a>
 
-      <!-- Menu Mobile -->
-      <button id="menu-btn" class="p-2 text-encre md:hidden" aria-label="Ouvrir le menu">
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+      <!-- Bouton mobile -->
+      <button id="menu-btn" class="rounded-2xl p-2 text-white hover:bg-white/5 md:hidden" aria-label="Ouvrir le menu">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
       </button>
     </nav>
 
-    <!-- Menu Mobile -->
-    <div id="mobile-menu" class="hidden border-t border-ivoire-border bg-ivoire px-6 py-6 md:hidden">
-      <ul class="flex flex-col gap-4 text-xs font-semibold uppercase tracking-[0.2em] text-encre-muted">
-        <li><a href="#services" class="block py-1 hover:text-encre">Services</a></li>
-        <li><a href="#espace" class="block py-1 hover:text-encre">Espace Client</a></li>
-        <li><a href="#contact" class="block py-1 hover:text-encre">Contact</a></li>
+    <!-- Menu mobile -->
+    <div id="mobile-menu" class="hidden border-t border-white/10 bg-dark px-6 py-6 md:hidden">
+      <ul class="flex flex-col gap-4 text-xs font-semibold uppercase tracking-wider text-slate-300">
+        <li><a href="#services" class="block py-2 hover:text-lime">Services</a></li>
+        <li><a href="#espace" class="block py-2 hover:text-lime">Espace Client</a></li>
+        <li><a href="#contact" class="block py-2 hover:text-lime">Contact</a></li>
         <li>
-          <a href="/login" class="mt-2 block bg-encre py-3 text-center text-ivoire font-display font-bold">
+          <a href="/login" class="mt-2 block rounded-full bg-lime py-3 text-center text-black font-bold uppercase tracking-wider">
             Connexion Espace Privé →
           </a>
         </li>
@@ -100,49 +98,77 @@
   </header>
 
   <!-- ============ HERO SECTION ============ -->
-  <section class="relative min-h-screen pt-36 pb-24 flex items-center border-b border-ivoire-border">
-    <div class="mx-auto max-w-7xl px-6 w-full">
-      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+  <section class="relative min-h-screen pt-32 pb-20 flex items-center overflow-hidden">
+    <!-- Ambient glowing lights -->
+    <div class="pointer-events-none absolute top-1/4 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime/10 blur-[140px]"></div>
+    <div class="pointer-events-none absolute top-1/3 right-10 -z-10 h-[350px] w-[350px] rounded-full bg-lime/5 blur-[120px]"></div>
+
+    <div class="mx-auto max-w-7xl px-6 w-full pt-10">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
         
-        <div class="lg:col-span-8">
-          <div class="mb-6 inline-flex items-center gap-3 border border-bronze/30 bg-bronze-soft px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.25em] text-bronze">
-            <span class="h-1.5 w-1.5 rounded-full bg-bronze"></span>
-            Studio Créatif & Communication Global
+        <div class="lg:col-span-7">
+          <div class="mb-6 inline-flex items-center gap-2.5 rounded-full border border-lime-border bg-lime-soft px-4 py-2 text-xs font-bold uppercase tracking-wider text-lime backdrop-blur-md">
+            <span class="flex h-2 w-2 rounded-full bg-lime animate-ping"></span>
+            Studio Créatif & Communication 360°
           </div>
 
-          <h1 class="font-display text-5xl font-extrabold tracking-tight text-encre sm:text-6xl lg:text-7xl leading-[1.05]">
-            L'exigence esthétique au service des marques <em class="not-italic text-bronze">d'exception</em>.
+          <h1 class="font-display text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl leading-[1.1]">
+            L'image de marque <span class="text-lime">réinventée</span> avec style & impact.
           </h1>
 
-          <p class="mt-8 max-w-2xl text-base font-normal leading-relaxed text-encre-muted md:text-lg">
-            Stratégie 360°, identité de marque, création vidéo & événementiel sur-mesure. Nous façonnons l'image des maisons et entreprises premium avec élégance et précision.
+          <p class="mt-6 text-base font-normal leading-relaxed text-slate-400 md:text-lg">
+            Stratégie globale, identité visuelle, création vidéo et événements d'exception. Nous accompagnons les marques premium avec un design d'avance.
           </p>
 
-          <div class="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
             <a href="/login"
-               class="inline-flex items-center justify-center gap-3 bg-encre px-8 py-4 font-display text-xs font-bold uppercase tracking-[0.2em] text-ivoire transition duration-300 hover:bg-bronze">
+               class="inline-flex items-center justify-center gap-3 rounded-full bg-lime px-8 py-4 font-display text-sm font-bold uppercase tracking-wider text-black shadow-xl shadow-lime/20 transition duration-300 hover:bg-white hover:scale-[1.02]">
               <span>Accéder à l'espace client</span>
-              <span>→</span>
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </a>
             <a href="#services"
-               class="inline-flex items-center justify-center gap-2 border border-encre/20 bg-transparent px-8 py-4 font-display text-xs font-semibold uppercase tracking-[0.2em] text-encre transition duration-300 hover:border-encre hover:bg-encre hover:text-ivoire">
-              Découvrir le studio
+               class="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-8 py-4 font-display text-sm font-semibold uppercase tracking-wider text-slate-200 transition duration-300 hover:border-lime hover:bg-white/10 hover:text-white">
+              Découvrir nos services
             </a>
           </div>
         </div>
 
-        <div class="lg:col-span-4 border-l border-ivoire-border pl-0 lg:pl-10 space-y-8 text-xs">
-          <div>
-            <span class="block font-display text-3xl font-extrabold text-encre">360°</span>
-            <span class="mt-1 block uppercase tracking-widest text-encre-muted">Accompagnement global</span>
-          </div>
-          <div class="border-t border-ivoire-border pt-6">
-            <span class="block font-display text-3xl font-extrabold text-bronze">PARIS</span>
-            <span class="mt-1 block uppercase tracking-widest text-encre-muted">Île-de-France & International</span>
-          </div>
-          <div class="border-t border-ivoire-border pt-6">
-            <span class="block font-display text-3xl font-extrabold text-encre">2026</span>
-            <span class="mt-1 block uppercase tracking-widest text-encre-muted">Espace client centralisé en temps réel</span>
+        <!-- Visual UI Kit Mockup Card -->
+        <div class="lg:col-span-5">
+          <div class="rounded-3xl border border-white/10 bg-dark-card p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime text-black font-bold">
+                  WORKSPACE
+                </div>
+                <div>
+                  <h3 class="font-display font-bold text-white text-base">BBK Client Vault</h3>
+                  <p class="text-xs text-slate-400">Espace Privé & Livrables</p>
+                </div>
+              </div>
+              <span class="rounded-full bg-lime/10 px-3 py-1 text-xs font-bold text-lime border border-lime/20">Live</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-2xl bg-dark-surface p-4 border border-white/5">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">34 Documents</p>
+                <p class="mt-1 font-display text-2xl font-extrabold text-lime">Briefs & Visuels</p>
+              </div>
+              <div class="rounded-2xl bg-dark-surface p-4 border border-white/5">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Accès Sécurisé</p>
+                <p class="mt-1 font-display text-2xl font-extrabold text-white">100% Chiffré</p>
+              </div>
+            </div>
+
+            <div class="rounded-2xl bg-lime p-5 text-black">
+              <div class="flex items-center justify-between">
+                <span class="font-display text-xs font-extrabold uppercase tracking-wider">Session Active</span>
+                <span class="h-2 w-2 rounded-full bg-black"></span>
+              </div>
+              <p class="mt-2 font-display text-lg font-bold">Consultez vos factures & plannings</p>
+            </div>
           </div>
         </div>
 
@@ -150,77 +176,91 @@
     </div>
   </section>
 
-  <!-- ============ SERVICES ÉDITORIAUX ============ -->
-  <section id="services" class="py-28 border-b border-ivoire-border bg-ivoire-subtle">
+  <!-- ============ SERVICES (UI KIT CARDS) ============ -->
+  <section id="services" class="py-28 border-t border-white/10 bg-dark-surface">
     <div class="mx-auto max-w-7xl px-6">
       
-      <div class="mb-16 flex flex-col justify-between gap-6 border-b border-ivoire-border pb-8 md:flex-row md:items-end">
-        <div>
-          <span class="text-[11px] font-bold uppercase tracking-[0.25em] text-bronze">[ NOS EXPERTISES ]</span>
-          <h2 class="mt-3 font-display text-4xl font-extrabold tracking-tight text-encre md:text-5xl">
-            Savoir-Faire Studio
-          </h2>
-        </div>
-        <p class="max-w-md text-xs font-normal leading-relaxed text-encre-muted">
-          Une approche globale où chaque discipline nourrit la valeur perçue de votre marque.
+      <div class="mb-16 max-w-2xl">
+        <span class="rounded-full bg-lime/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-lime border border-lime/20">Nos Expertises</span>
+        <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+          Une approche 360° complète
+        </h2>
+        <p class="mt-3 text-base text-slate-400">
+          Chaque pôle de compétence travaille en synergie pour développer la valeur de votre marque.
         </p>
       </div>
 
-      <div class="grid gap-px bg-ivoire-border sm:grid-cols-2 lg:grid-cols-3 border border-ivoire-border">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         
         <!-- 01 Stratégie -->
-        <article class="bg-ivoire-card p-10 transition duration-300 hover:bg-ivoire">
-          <span class="font-display text-xs font-bold uppercase tracking-widest text-bronze">[ 01 ]</span>
-          <h3 class="mt-6 font-display text-2xl font-bold text-encre">Stratégie & Marque</h3>
-          <p class="mt-4 text-xs leading-relaxed text-encre-muted">
-            Plateforme de marque, positionnement concurrentiel et plan média 360° pour donner un cap clair à vos prises de parole.
+        <article class="group rounded-3xl border border-white/10 bg-dark-card p-8 transition duration-300 hover:border-lime/50 hover:bg-dark-cardHover">
+          <div class="flex items-center justify-between">
+            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5 font-display text-sm font-bold text-lime">01</span>
+            <span class="text-xs text-slate-500 uppercase tracking-widest font-bold">Conseil</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-bold text-white">Stratégie & Marque</h3>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+            Positionnement de marque, plateforme stratégique et plan d'action de communication pour affirmer votre singularité.
           </p>
         </article>
 
         <!-- 02 Identité Visuelle -->
-        <article class="bg-ivoire-card p-10 transition duration-300 hover:bg-ivoire">
-          <span class="font-display text-xs font-bold uppercase tracking-widest text-bronze">[ 02 ]</span>
-          <h3 class="mt-6 font-display text-2xl font-bold text-encre">Identité & Design</h3>
-          <p class="mt-4 text-xs leading-relaxed text-encre-muted">
-            Logotypes, chartes graphiques imprimées et systèmes visuels digitaux créés pour susciter le désir et l'adhésion.
+        <article class="group rounded-3xl border border-white/10 bg-dark-card p-8 transition duration-300 hover:border-lime/50 hover:bg-dark-cardHover">
+          <div class="flex items-center justify-between">
+            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5 font-display text-sm font-bold text-lime">02</span>
+            <span class="text-xs text-slate-500 uppercase tracking-widest font-bold">Design</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-bold text-white">Identité & Design</h3>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+            Logotypes, typographies sur mesure et chartes graphiques sophistiquées créées pour marquer les esprits.
           </p>
         </article>
 
         <!-- 03 Social Media -->
-        <article class="bg-ivoire-card p-10 transition duration-300 hover:bg-ivoire">
-          <span class="font-display text-xs font-bold uppercase tracking-widest text-bronze">[ 03 ]</span>
-          <h3 class="mt-6 font-display text-2xl font-bold text-encre">Social Media & Influence</h3>
-          <p class="mt-4 text-xs leading-relaxed text-encre-muted">
-            Lignes éditoriales, direction artistique réseaux sociaux et stratégie d'influence auprès des décideurs B2B et consommateurs premium.
+        <article class="group rounded-3xl border border-white/10 bg-dark-card p-8 transition duration-300 hover:border-lime/50 hover:bg-dark-cardHover">
+          <div class="flex items-center justify-between">
+            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5 font-display text-sm font-bold text-lime">03</span>
+            <span class="text-xs text-slate-500 uppercase tracking-widest font-bold">Social</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-bold text-white">Social Media</h3>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+            Lignes éditoriales captivantes, création de contenus vidéo shorts et animation stratégique de votre communauté.
           </p>
         </article>
 
         <!-- 04 Content Production -->
-        <article class="bg-ivoire-card p-10 transition duration-300 hover:bg-ivoire">
-          <span class="font-display text-xs font-bold uppercase tracking-widest text-bronze">[ 04 ]</span>
-          <h3 class="mt-6 font-display text-2xl font-bold text-encre">Production Photo & Vidéo</h3>
-          <p class="mt-4 text-xs leading-relaxed text-encre-muted">
-            Shootings photos éditoriaux, films de marque et contenus courts produits avec l'exigence du luxe.
+        <article class="group rounded-3xl border border-white/10 bg-dark-card p-8 transition duration-300 hover:border-lime/50 hover:bg-dark-cardHover">
+          <div class="flex items-center justify-between">
+            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5 font-display text-sm font-bold text-lime">04</span>
+            <span class="text-xs text-slate-500 uppercase tracking-widest font-bold">Studio</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-bold text-white">Production Photo & Vidéo</h3>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+            Shootings photos, productions vidéo 4K et rédaction premium adaptés à tous vos supports print & web.
           </p>
         </article>
 
         <!-- 05 Événementiel -->
-        <article class="bg-ivoire-card p-10 transition duration-300 hover:bg-ivoire">
-          <span class="font-display text-xs font-bold uppercase tracking-widest text-bronze">[ 05 ]</span>
-          <h3 class="mt-6 font-display text-2xl font-bold text-encre">Événementiel Privé</h3>
-          <p class="mt-4 text-xs leading-relaxed text-encre-muted">
-            Lancements de produits, soirées réservées et activations de marque mémorables en lieux prestigieux.
+        <article class="group rounded-3xl border border-white/10 bg-dark-card p-8 transition duration-300 hover:border-lime/50 hover:bg-dark-cardHover">
+          <div class="flex items-center justify-between">
+            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5 font-display text-sm font-bold text-lime">05</span>
+            <span class="text-xs text-slate-500 uppercase tracking-widest font-bold">Events</span>
+          </div>
+          <h3 class="mt-6 font-display text-2xl font-bold text-white">Événementiel Privé</h3>
+          <p class="mt-3 text-sm text-slate-400 leading-relaxed">
+            Soirées privées, pop-up stores et moments d'exception créés sur-mesure pour vos clients VIP.
           </p>
         </article>
 
         <!-- Encart CTA -->
-        <article class="flex flex-col justify-between bg-encre p-10 text-ivoire">
+        <article class="flex flex-col justify-between rounded-3xl border border-lime/30 bg-lime p-8 text-black">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-bronze-light">[ VOTRE DISPOSITIF ]</span>
-            <h3 class="mt-4 font-display text-2xl font-bold text-ivoire">Un projet d'envergure ?</h3>
+            <span class="text-xs font-bold uppercase tracking-widest text-black/70">Votre Projet</span>
+            <h3 class="mt-2 font-heading text-3xl font-extrabold text-black">Envie d'un nouvel élan ?</h3>
           </div>
-          <a href="#contact" class="mt-8 font-display text-xs font-bold uppercase tracking-[0.2em] text-bronze-light hover:text-ivoire transition">
-            Consulter l'agence →
+          <a href="#contact" class="mt-6 inline-flex items-center gap-2 font-display text-xs font-extrabold uppercase tracking-wider text-black hover:underline">
+            <span>Échanger avec le studio</span>
+            <span>→</span>
           </a>
         </article>
 
@@ -229,49 +269,49 @@
   </section>
 
   <!-- ============ ESPACE CLIENT ============ -->
-  <section id="espace" class="py-28 border-b border-ivoire-border">
+  <section id="espace" class="py-28 border-t border-white/10">
     <div class="mx-auto max-w-7xl px-6">
       
       <div class="mb-16 max-w-2xl">
-        <span class="text-[11px] font-bold uppercase tracking-[0.25em] text-bronze">[ ESPACE CLIENT SÉCURISÉ ]</span>
-        <h2 class="mt-3 font-display text-4xl font-extrabold tracking-tight text-encre md:text-5xl">
-          Vos livrables réunis en un lieu unique
+        <span class="rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white border border-white/10">Plateforme Privée</span>
+        <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+          Tous vos livrables au même endroit
         </h2>
-        <p class="mt-4 text-sm leading-relaxed text-encre-muted">
-          Briefs créatifs, plannings de tournage, visuels HD et factures : consultez l'ensemble des documents déposés par l'agence.
+        <p class="mt-3 text-base text-slate-400">
+          Retrouvez vos briefs, visuels, factures et plannings sur un espace sécurisé en temps réel.
         </p>
       </div>
 
-      <div class="grid gap-8 md:grid-cols-3">
-        <div class="border-t-2 border-encre pt-8">
-          <span class="font-display text-4xl font-extrabold text-bronze">01</span>
-          <h3 class="mt-4 font-display text-xl font-bold text-encre">Dépôt Continu</h3>
-          <p class="mt-2 text-xs leading-relaxed text-encre-muted">
-            À chaque étape clé de votre accompagnement, l'agence dépose vos fichiers sur votre coffre-fort virtuel.
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-dark-card p-8">
+          <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime text-black font-bold text-sm mb-6">1</span>
+          <h3 class="font-display text-xl font-bold text-white">BBK Dépose</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            À chaque livrable (brief, visuel, facture), l'agence dépose les fichiers directement sur votre espace.
           </p>
         </div>
 
-        <div class="border-t-2 border-encre pt-8">
-          <span class="font-display text-4xl font-extrabold text-bronze">02</span>
-          <h3 class="mt-4 font-display text-xl font-bold text-encre">Code d'Accès Dédié</h3>
-          <p class="mt-2 text-xs leading-relaxed text-encre-muted">
-            Chaque marque dispose d'un identifiant privé et d'un code confidentiel pour une étanchéité totale.
+        <div class="rounded-3xl border border-white/10 bg-dark-card p-8">
+          <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-black font-bold text-sm mb-6">2</span>
+          <h3 class="font-display text-xl font-bold text-white">Accès Sécurisé</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Connectez-vous grâce à votre email et votre code confidentiel personnel transmis par l'équipe.
           </p>
         </div>
 
-        <div class="border-t-2 border-encre pt-8">
-          <span class="font-display text-4xl font-extrabold text-bronze">03</span>
-          <h3 class="mt-4 font-display text-xl font-bold text-encre">Consultation & Filtres</h3>
-          <p class="mt-2 text-xs leading-relaxed text-encre-muted">
-            Recherchez rapidement un document par type (Brief, Visuel, Facture, Planning) et téléchargez-le directement.
+        <div class="rounded-3xl border border-white/10 bg-dark-card p-8">
+          <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime text-black font-bold text-sm mb-6">3</span>
+          <h3 class="font-display text-xl font-bold text-white">Consultez & Téléchargez</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Recherchez et filtrez l'ensemble de vos documents classés et téléchargez-les en un clic.
           </p>
         </div>
       </div>
 
-      <div class="mt-14">
+      <div class="mt-12">
         <a href="/login"
-           class="inline-flex items-center gap-3 bg-encre px-8 py-4 font-display text-xs font-bold uppercase tracking-[0.2em] text-ivoire hover:bg-bronze transition">
-          <span>Ouvrir mon espace client</span>
+           class="inline-flex items-center gap-3 rounded-full bg-lime px-8 py-4 font-display text-xs font-bold uppercase tracking-wider text-black shadow-xl shadow-lime/20 hover:bg-white transition">
+          <span>Accéder à mon espace client</span>
           <span>→</span>
         </a>
       </div>
@@ -280,36 +320,34 @@
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="py-28 bg-ivoire-subtle">
+  <section id="contact" class="py-28 border-t border-white/10 bg-dark-surface">
     <div class="mx-auto max-w-7xl px-6">
       <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
         <div>
-          <span class="text-[11px] font-bold uppercase tracking-[0.25em] text-bronze">[ CONTACT & RENCONTRE ]</span>
-          <h2 class="mt-3 font-display text-4xl font-extrabold tracking-tight text-encre md:text-5xl">
-            Échangeons sur vos enjeux
+          <span class="rounded-full bg-lime/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-lime border border-lime/20">Contact</span>
+          <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+            Donnons vie à vos projets
           </h2>
-          <p class="mt-4 text-sm leading-relaxed text-encre-muted">
-            Parlez-nous de votre marque et de vos objectifs. L'équipe BBK étudie vos besoins sous 24h ouvrées.
+          <p class="mt-3 text-base text-slate-400 leading-relaxed">
+            Échangeons sur vos ambitions et découvrez nos recommandations sur-mesure. Notre équipe vous répond sous 24h.
           </p>
         </div>
 
-        <div class="bg-ivoire-card border border-ivoire-border p-8 lg:p-12 space-y-8">
+        <div class="rounded-3xl border border-white/10 bg-dark-card p-8 lg:p-10 space-y-6">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-encre-muted">Email Direct</span>
-            <a href="mailto:contact@agence-bbk.fr" class="mt-2 block font-display text-2xl font-bold text-encre hover:text-bronze transition">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Adresse Email Directe</p>
+            <a href="mailto:contact@agence-bbk.fr" class="mt-1 block font-display text-2xl font-bold text-white hover:text-lime transition">
               contact@agence-bbk.fr
             </a>
           </div>
-          
-          <div class="border-t border-ivoire-border pt-6">
-            <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-encre-muted">Zone d'intervention</span>
-            <p class="mt-2 font-display text-lg font-semibold text-encre">Paris &bull; Île-de-France &bull; International</p>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Zone d'intervention</p>
+            <p class="mt-1 font-display text-lg font-bold text-slate-200">Paris, Île-de-France & International</p>
           </div>
-
           <div class="pt-2">
             <a href="mailto:contact@agence-bbk.fr?subject=Nouveau%20Projet"
-               class="block w-full bg-encre py-4 text-center font-display text-xs font-bold uppercase tracking-[0.2em] text-ivoire hover:bg-bronze transition">
-              Prendre contact avec l'agence
+               class="inline-flex w-full justify-center rounded-full bg-white px-6 py-4 font-display text-xs font-bold uppercase tracking-wider text-black transition hover:bg-lime">
+              Écrire à l'agence
             </a>
           </div>
         </div>
@@ -318,17 +356,17 @@
   </section>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="border-t border-ivoire-border bg-ivoire py-12 text-encre-muted">
+  <footer class="border-t border-white/10 bg-dark py-12 text-slate-400">
     <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 text-xs md:flex-row">
-      <div class="flex items-center gap-3">
-        <span class="flex h-7 w-7 items-center justify-center bg-encre font-display text-[10px] font-bold text-ivoire">BBK</span>
-        <span class="font-display font-bold text-encre">Agence BBK</span>
+      <div class="flex items-center gap-3 font-display text-base font-bold text-white">
+        <span class="flex h-7 w-7 items-center justify-center rounded-xl bg-lime text-[10px] font-black text-black">BBK</span>
+        Agence BBK
       </div>
-      <ul class="flex flex-wrap items-center gap-8 font-semibold uppercase tracking-[0.15em] text-[10px]">
-        <li><a href="#services" class="hover:text-encre">Services</a></li>
-        <li><a href="#espace" class="hover:text-encre">Espace Client</a></li>
-        <li><a href="#contact" class="hover:text-encre">Contact</a></li>
-        <li><a href="/login" class="hover:text-bronze">Connexion</a></li>
+      <ul class="flex flex-wrap items-center gap-6 font-semibold uppercase tracking-wider">
+        <li><a href="#services" class="hover:text-white">Services</a></li>
+        <li><a href="#espace" class="hover:text-white">Espace Client</a></li>
+        <li><a href="#contact" class="hover:text-white">Contact</a></li>
+        <li><a href="/login" class="hover:text-lime">Connexion</a></li>
       </ul>
       <p>© <span id="year"></span> Agence BBK — Tous droits réservés.</p>
     </div>

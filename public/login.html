@@ -6,37 +6,34 @@
   <title>Connexion — Espace Privé Agence BBK</title>
   <meta name="robots" content="noindex, nofollow" />
 
-  <!-- Polices Éditioriales Haut de Gamme -->
+  <!-- Polices Outfit & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind via CDN + Palette Éditorial Ivoire BBK -->
+  <!-- Tailwind via CDN + Système de design UI Kit Dark Neon -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            ivoire: {
-              DEFAULT: "#FAF9F6",
-              card: "#FFFFFF",
-              subtle: "#F2EFE9",
-              border: "#E7E3DA",
+            dark: {
+              DEFAULT: "#0D0D0F",
+              card: "#18181C",
+              surface: "#141417",
+              border: "rgba(255, 255, 255, 0.08)",
             },
-            encre: {
-              DEFAULT: "#1C1917",
-              muted: "#78716C",
-            },
-            bronze: {
-              DEFAULT: "#967240",
-              dark: "#78582F",
-              soft: "rgba(150, 114, 64, 0.08)",
+            lime: {
+              DEFAULT: "#B5F73B",
+              hover: "#A2E627",
+              soft: "rgba(181, 247, 59, 0.12)",
+              border: "rgba(181, 247, 59, 0.25)",
             }
           },
           fontFamily: {
-            display: ['"Syne"', "sans-serif"],
-            sans: ['"Plus Jakarta Sans"', "sans-serif"]
+            sans: ['"Outfit"', '"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif']
           }
         }
       }
@@ -44,95 +41,109 @@
   </script>
 </head>
 
-<body class="min-h-screen bg-ivoire font-sans text-encre antialiased selection:bg-encre selection:text-ivoire">
+<body class="min-h-screen bg-dark font-sans text-white antialiased selection:bg-lime selection:text-black">
   
   <div class="grid min-h-screen md:grid-cols-2">
 
-    <!-- Colonne Éditioriale (Desktop) -->
-    <aside class="relative hidden flex-col justify-between border-r border-ivoire-border bg-ivoire-subtle p-16 md:flex">
+    <!-- Colonne Visuelle (Desktop) -->
+    <aside class="relative hidden flex-col justify-between overflow-hidden border-r border-white/10 bg-dark-surface p-12 md:flex">
+      <!-- Glow ambient background -->
+      <div class="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime/10 blur-[140px]"></div>
+
       <a href="/" class="flex items-center gap-3">
-        <span class="flex h-9 w-9 items-center justify-center bg-encre font-display text-xs font-extrabold tracking-widest text-ivoire">
+        <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-lime font-display text-xs font-black tracking-wider text-black shadow-lg shadow-lime/20">
           BBK
         </span>
         <div class="flex flex-col">
-          <span class="font-display text-lg font-bold tracking-tight text-encre leading-none">
-            Agence <span class="text-bronze">BBK</span>
+          <span class="font-display text-xl font-bold tracking-tight text-white leading-none">
+            Agence <span class="text-lime">BBK</span>
           </span>
-          <span class="text-[9px] uppercase tracking-[0.25em] text-encre-muted">Paris &bull; Espace Privé</span>
+          <span class="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Espace Client Privé</span>
         </div>
       </a>
 
-      <div class="my-auto max-w-md">
-        <span class="inline-block border border-bronze/30 bg-bronze-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-bronze mb-4">
-          [ COFFRE-FORT NUMÉRIQUE ]
+      <div class="my-auto max-w-md space-y-4">
+        <span class="inline-block rounded-full border border-lime-border bg-lime-soft px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-lime">
+          Accès Sécurisé
         </span>
-        <h2 class="font-display text-4xl font-extrabold tracking-tight text-encre leading-tight">
-          Briefs, visuels HD & factures.<br />
-          <span class="text-bronze">Réunis en toute confidentialité.</span>
+        <h2 class="font-display text-4xl font-extrabold tracking-tight text-white leading-tight">
+          Vos briefs, visuels HD & factures.<br />
+          <span class="text-lime">Centralisés en un clic.</span>
         </h2>
-        <p class="mt-4 text-xs font-normal leading-relaxed text-encre-muted">
-          Consultez et téléchargez l'ensemble des éléments produits par le studio BBK pour votre marque.
+        <p class="text-sm text-slate-400 leading-relaxed">
+          Consultez et téléchargez les livrables déposés par le studio BBK en toute confidentialité.
         </p>
+
+        <!-- Preview UI Kit Card Badge -->
+        <div class="mt-6 rounded-3xl border border-white/10 bg-dark-card p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300">Documents Clients</span>
+            <span class="rounded-full bg-lime/20 px-2.5 py-0.5 text-[10px] font-bold text-lime">Temps Réel</span>
+          </div>
+          <div class="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+            <div class="h-full bg-lime w-3/4 rounded-full"></div>
+          </div>
+        </div>
       </div>
 
-      <div class="text-[10px] font-semibold uppercase tracking-[0.25em] text-encre-muted">
-        AGENCE BBK &bull; ACCÈS SÉCURISÉ CLIENT
-      </div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">
+        AGENCE BBK &bull; ACCÈS SÉCURISÉ
+      </p>
     </aside>
 
     <!-- Colonne Formulaire -->
-    <main class="flex items-center justify-center px-6 py-16 bg-ivoire">
-      <div class="w-full max-w-md border border-ivoire-border bg-ivoire-card p-8 shadow-xl sm:p-12">
+    <main class="flex items-center justify-center px-6 py-16 bg-dark">
+      <div class="w-full max-w-md rounded-3xl border border-white/10 bg-dark-card p-8 shadow-2xl sm:p-10 space-y-6">
         
-        <a href="/" class="mb-8 flex items-center gap-3 md:hidden">
-          <span class="flex h-8 w-8 items-center justify-center bg-encre font-display text-xs text-ivoire font-bold">BBK</span>
-          <span class="font-display text-base font-bold text-encre">Agence BBK</span>
+        <a href="/" class="mb-6 flex items-center gap-3 md:hidden">
+          <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-lime font-display text-xs text-black font-bold">BBK</span>
+          <span class="font-display text-lg font-bold text-white">Agence BBK</span>
         </a>
 
-        <div class="mb-8">
-          <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-bronze">[ ESPACE CLIENT ]</span>
-          <h1 class="mt-1 font-display text-3xl font-extrabold text-encre">Connexion</h1>
-          <p class="mt-2 text-xs text-encre-muted">
-            Saisissez l'email et le code transmis par l'agence.
+        <div>
+          <span class="rounded-full bg-lime/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-lime border border-lime/20">Connexion</span>
+          <h1 class="mt-3 font-display text-3xl font-extrabold text-white">Mon Espace</h1>
+          <p class="mt-1 text-xs text-slate-400">
+            Saisissez vos identifiants transmis par l'agence.
           </p>
         </div>
 
-        <form id="login-form" class="space-y-6" novalidate>
+        <form id="login-form" class="space-y-5" novalidate>
           <div>
-            <label for="email" class="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-encre">
+            <label for="email" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
               Adresse Email
             </label>
             <input id="email" name="email" type="email" autocomplete="email" required
                    placeholder="vous@votre-marque.com"
-                   class="w-full border border-ivoire-border bg-ivoire px-4 py-3.5 text-xs text-encre placeholder-encre-muted outline-none transition focus:border-bronze focus:bg-white" />
+                   class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white placeholder-slate-500 outline-none transition focus:border-lime focus:ring-1 focus:ring-lime" />
           </div>
 
           <div>
-            <label for="code" class="mb-2 block text-[11px] font-bold uppercase tracking-[0.15em] text-encre">
+            <label for="code" class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-300">
               Code d'accès
             </label>
             <input id="code" name="code" type="password" autocomplete="current-password" required
                    placeholder="••••••••"
-                   class="w-full border border-ivoire-border bg-ivoire px-4 py-3.5 text-xs text-encre placeholder-encre-muted outline-none transition focus:border-bronze focus:bg-white" />
+                   class="w-full rounded-2xl border border-white/10 bg-dark-surface px-4 py-3.5 text-xs text-white placeholder-slate-500 outline-none transition focus:border-lime focus:ring-1 focus:ring-lime" />
           </div>
 
           <button type="submit"
-                  class="w-full bg-encre py-4 font-display text-xs font-bold uppercase tracking-[0.2em] text-ivoire transition duration-300 hover:bg-bronze">
+                  class="w-full rounded-full bg-lime py-4 font-display text-xs font-extrabold uppercase tracking-wider text-black shadow-xl shadow-lime/20 transition duration-300 hover:bg-white hover:scale-[1.01]">
             Accéder à mon espace
           </button>
 
-          <div id="form-message" class="hidden border p-3 text-center text-xs font-medium" role="status"></div>
+          <div id="form-message" class="hidden rounded-2xl p-3 text-center text-xs font-bold" role="status"></div>
         </form>
 
-        <div class="mt-8 border-t border-ivoire-border pt-6 text-xs text-encre-muted">
+        <div class="border-t border-white/10 pt-6 text-xs text-slate-400 space-y-3">
           <p>
             Identifiants oubliés ? 
-            <a href="mailto:contact@agence-bbk.fr?subject=Acc%C3%A8s%20Espace%20Client" class="text-bronze hover:underline font-semibold">
-              Contactez votre chargé de compte
+            <a href="mailto:contact@agence-bbk.fr?subject=Acc%C3%A8s%20Espace%20Client" class="text-lime hover:underline font-bold">
+              Contactez l'agence
             </a>.
           </p>
-          <a href="/" class="mt-4 inline-flex items-center gap-2 font-semibold text-encre hover:text-bronze transition">
-            <span>← Retour au site de l'agence</span>
+          <a href="/" class="inline-flex items-center gap-2 font-bold text-slate-400 hover:text-white transition">
+            <span>← Retour au site public</span>
           </a>
         </div>
       </div>
@@ -144,7 +155,6 @@
     const msg = document.getElementById("form-message");
     const submitBtn = form.querySelector("button[type='submit']");
 
-    // Redirection automatique si déjà connecté
     fetch("/api/me")
       .then((res) => res.json())
       .then((data) => {
@@ -162,7 +172,7 @@
       const code = document.getElementById("code").value;
 
       if (!email || !code) {
-        msg.className = "mt-4 border border-red-500/30 bg-red-50 p-3 text-center text-xs font-medium text-red-700";
+        msg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
         msg.textContent = "Veuillez remplir tous les champs.";
         msg.classList.remove("hidden");
         return;
@@ -184,19 +194,19 @@
         const data = await response.json();
 
         if (response.ok && data.ok) {
-          msg.className = "mt-4 border border-emerald-500/30 bg-emerald-50 p-3 text-center text-xs font-medium text-emerald-800";
+          msg.className = "mt-4 rounded-2xl bg-lime/10 border border-lime/30 p-3 text-center text-xs font-bold text-lime";
           msg.textContent = "Connexion réussie. Redirection...";
           msg.classList.remove("hidden");
           setTimeout(() => {
             window.location.href = "/espace-client";
           }, 400);
         } else {
-          msg.className = "mt-4 border border-red-500/30 bg-red-50 p-3 text-center text-xs font-medium text-red-700";
+          msg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
           msg.textContent = data.error || "Email ou code d'accès incorrect.";
           msg.classList.remove("hidden");
         }
       } catch (err) {
-        msg.className = "mt-4 border border-red-500/30 bg-red-50 p-3 text-center text-xs font-medium text-red-700";
+        msg.className = "mt-4 rounded-2xl bg-red-500/10 border border-red-500/20 p-3 text-center text-xs font-bold text-red-400";
         msg.textContent = "Erreur de connexion avec le serveur.";
         msg.classList.remove("hidden");
       } finally {

@@ -6,38 +6,37 @@
   <title>Mon Espace Client — Agence BBK</title>
   <meta name="robots" content="noindex, nofollow" />
 
-  <!-- Polices ultra modernes -->
+  <!-- Polices Éditoriales Haut de Gamme -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind via CDN + Système de design BBK 2026 -->
+  <!-- Tailwind via CDN + Palette Éditorial Ivoire BBK -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: {
-              500: "#6366F1",
-              600: "#4F46E5",
-              400: "#818CF8",
+            ivoire: {
+              DEFAULT: "#FAF9F6",
+              card: "#FFFFFF",
+              subtle: "#F2EFE9",
+              border: "#E7E3DA",
             },
-            surface: {
-              dark: "#090D16",
-              card: "#111726",
-              cardHover: "#182136",
+            encre: {
+              DEFAULT: "#1C1917",
+              muted: "#78716C",
             },
-            neon: {
-              violet: "#8B5CF6",
-              cyan: "#06B6D4",
-              emerald: "#10B981",
-              amber: "#F59E0B",
+            bronze: {
+              DEFAULT: "#967240",
+              dark: "#78582F",
+              soft: "rgba(150, 114, 64, 0.08)",
             }
           },
           fontFamily: {
-            heading: ['"Plus Jakarta Sans"', "sans-serif"],
-            sans: ["Inter", "sans-serif"]
+            display: ['"Syne"', "sans-serif"],
+            sans: ['"Plus Jakarta Sans"', "sans-serif"]
           }
         }
       }
@@ -45,33 +44,38 @@
   </script>
 </head>
 
-<body class="min-h-screen bg-surface-dark font-sans text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
+<body class="min-h-screen bg-ivoire font-sans text-encre antialiased selection:bg-encre selection:text-ivoire">
 
-  <!-- ============ NAVIGATION DYNAMIQUE ============ -->
-  <header class="sticky top-0 z-50 border-b border-white/10 bg-surface-dark/90 backdrop-blur-xl">
+  <!-- ============ EN-TÊTE / NAVIGATION ÉDITORIALE ============ -->
+  <header class="sticky top-0 z-50 border-b border-ivoire-border bg-ivoire/95 backdrop-blur-md">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-      <a href="/" class="flex items-center gap-2 font-heading text-xl font-bold tracking-tight text-white">
-        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-brand-600 via-neon-violet to-neon-cyan text-xs font-black text-white shadow-lg shadow-brand-500/20">
+      <a href="/" class="flex items-center gap-3">
+        <span class="flex h-8 w-8 items-center justify-center bg-encre font-display text-xs font-extrabold tracking-widest text-ivoire">
           BBK
         </span>
-        <span>Agence <span class="bg-gradient-to-r from-brand-400 via-neon-violet to-neon-cyan bg-clip-text text-transparent">BBK</span></span>
+        <div class="flex flex-col">
+          <span class="font-display text-base font-bold tracking-tight text-encre leading-none">
+            Agence <span class="text-bronze">BBK</span>
+          </span>
+          <span class="text-[9px] uppercase tracking-[0.2em] text-encre-muted">Espace Privé Client</span>
+        </div>
       </a>
 
       <div class="flex items-center gap-4 md:gap-6">
-        <div id="user-badge" class="hidden items-center gap-3 border-r border-white/10 pr-6 text-right md:flex">
+        <div id="user-badge" class="hidden items-center gap-3 border-r border-ivoire-border pr-6 text-right md:flex">
           <div>
-            <p id="client-name" class="font-heading text-sm font-bold text-white">—</p>
-            <p id="client-email" class="text-xs text-slate-400">—</p>
+            <p id="client-name" class="font-display text-sm font-bold text-encre">—</p>
+            <p id="client-email" class="text-xs text-encre-muted">—</p>
           </div>
-          <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-500 to-neon-violet text-sm font-heading font-black text-white shadow-md shadow-brand-500/30" id="client-avatar">
+          <div class="flex h-9 w-9 items-center justify-center border border-encre/20 bg-encre font-display text-xs font-bold text-ivoire" id="client-avatar">
             B
           </div>
         </div>
 
         <button id="logout-btn"
-                class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-300 transition duration-200 hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                class="inline-flex items-center gap-2 border border-encre/20 bg-transparent px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-encre transition duration-200 hover:bg-encre hover:text-ivoire">
+          <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
           Déconnexion
         </button>
@@ -82,25 +86,22 @@
   <!-- ============ CONTENU PRINCIPAL ============ -->
   <main class="mx-auto max-w-7xl px-6 py-10">
 
-    <!-- Hero / En-tête -->
-    <div class="mb-10 flex flex-col justify-between gap-6 border-b border-white/10 pb-8 md:flex-row md:items-end">
+    <!-- En-tête de section -->
+    <div class="mb-10 flex flex-col justify-between gap-6 border-b border-ivoire-border pb-8 md:flex-row md:items-end">
       <div>
-        <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-brand-400">
-          <span class="flex h-2 w-2 rounded-full bg-neon-emerald animate-pulse"></span>
-          Espace Client Sécurisé
-        </div>
-        <h1 class="font-heading text-4xl font-extrabold text-white md:text-5xl">
-          Vos Documents & Projets
+        <span class="text-[10px] font-bold uppercase tracking-[0.25em] text-bronze">[ DOSSIER DE MARQUE ]</span>
+        <h1 class="mt-1 font-display text-4xl font-extrabold text-encre md:text-5xl">
+          Vos Documents & Livrables
         </h1>
-        <p class="mt-2 text-sm text-slate-400">
-          Consultez et téléchargez en temps réel vos briefs, visuels HD, factures et plannings.
+        <p class="mt-2 text-xs text-encre-muted">
+          Consultez et téléchargez en temps réel vos briefs, visuels HD, factures et plannings déposés par l'agence.
         </p>
       </div>
 
       <div class="flex items-center gap-3">
         <button id="refresh-btn"
-                class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-surface-card px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-200 transition duration-200 hover:border-brand-500 hover:text-brand-400">
-          <svg id="refresh-icon" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="inline-flex items-center gap-2 border border-ivoire-border bg-ivoire-card px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] text-encre transition duration-200 hover:border-encre">
+          <svg id="refresh-icon" class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
           Actualiser
@@ -110,62 +111,62 @@
 
     <!-- Compteurs KPI -->
     <div class="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-      <div class="rounded-2xl border border-white/10 bg-surface-card p-5 transition hover:border-brand-500/30">
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Total documents</p>
-        <p id="stat-total" class="mt-2 font-heading text-3xl font-extrabold text-brand-400">—</p>
+      <div class="border border-ivoire-border bg-ivoire-card p-6">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-encre-muted">Total documents</p>
+        <p id="stat-total" class="mt-2 font-display text-3xl font-extrabold text-encre">—</p>
       </div>
-      <div class="rounded-2xl border border-white/10 bg-surface-card p-5 transition hover:border-neon-violet/30">
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Briefs & Plannings</p>
-        <p id="stat-briefs" class="mt-2 font-heading text-3xl font-extrabold text-neon-violet">—</p>
+      <div class="border border-ivoire-border bg-ivoire-card p-6">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-encre-muted">Briefs & Plannings</p>
+        <p id="stat-briefs" class="mt-2 font-display text-3xl font-extrabold text-bronze">—</p>
       </div>
-      <div class="rounded-2xl border border-white/10 bg-surface-card p-5 transition hover:border-neon-emerald/30">
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Factures & Devis</p>
-        <p id="stat-factures" class="mt-2 font-heading text-3xl font-extrabold text-neon-emerald">—</p>
+      <div class="border border-ivoire-border bg-ivoire-card p-6">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-encre-muted">Factures & Devis</p>
+        <p id="stat-factures" class="mt-2 font-display text-3xl font-extrabold text-encre">—</p>
       </div>
-      <div class="rounded-2xl border border-white/10 bg-surface-card p-5 transition hover:border-neon-cyan/30">
-        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Visuels & Médias</p>
-        <p id="stat-visuels" class="mt-2 font-heading text-3xl font-extrabold text-neon-cyan">—</p>
+      <div class="border border-ivoire-border bg-ivoire-card p-6">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-encre-muted">Visuels & Médias</p>
+        <p id="stat-visuels" class="mt-2 font-display text-3xl font-extrabold text-bronze">—</p>
       </div>
     </div>
 
     <!-- Barre de recherche et filtres -->
-    <div class="mb-8 flex flex-col gap-4 rounded-2xl border border-white/10 bg-surface-card p-5 md:flex-row md:items-center md:justify-between shadow-xl">
+    <div class="mb-8 flex flex-col gap-4 border border-ivoire-border bg-ivoire-card p-5 md:flex-row md:items-center md:justify-between shadow-sm">
       
       <!-- Recherche -->
       <div class="relative flex-1">
-        <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-encre-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
-        <input id="search-input" type="text" placeholder="Rechercher par nom de document..."
-               class="w-full rounded-xl border border-white/10 bg-surface-dark px-4 py-3 pl-11 text-xs text-white placeholder-slate-500 outline-none transition focus:border-brand-500 focus:ring-1 focus:ring-brand-500" />
+        <input id="search-input" type="text" placeholder="Rechercher un document par nom..."
+               class="w-full border border-ivoire-border bg-ivoire px-4 py-3 pl-11 text-xs text-encre placeholder-encre-muted outline-none transition focus:border-bronze focus:bg-white" />
       </div>
 
-      <!-- Pilules de Filtrage -->
+      <!-- Filtres -->
       <div class="flex flex-wrap items-center gap-2" id="filter-pills">
-        <button data-type="ALL" class="pill-btn active rounded-xl bg-gradient-to-r from-brand-500 to-neon-violet px-4 py-2 text-xs font-bold text-white shadow-md transition">
+        <button data-type="ALL" class="pill-btn active bg-encre px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.15em] text-ivoire transition">
           Tous
         </button>
-        <button data-type="Brief" class="pill-btn rounded-xl border border-white/10 bg-surface-dark px-3.5 py-2 text-xs font-medium text-slate-400 transition hover:border-brand-500 hover:text-white">
+        <button data-type="Brief" class="pill-btn border border-ivoire-border bg-ivoire px-3.5 py-2 font-display text-xs font-semibold uppercase tracking-[0.15em] text-encre-muted transition hover:border-encre hover:text-encre">
           Briefs
         </button>
-        <button data-type="Visuel" class="pill-btn rounded-xl border border-white/10 bg-surface-dark px-3.5 py-2 text-xs font-medium text-slate-400 transition hover:border-brand-500 hover:text-white">
+        <button data-type="Visuel" class="pill-btn border border-ivoire-border bg-ivoire px-3.5 py-2 font-display text-xs font-semibold uppercase tracking-[0.15em] text-encre-muted transition hover:border-encre hover:text-encre">
           Visuels
         </button>
-        <button data-type="Facture" class="pill-btn rounded-xl border border-white/10 bg-surface-dark px-3.5 py-2 text-xs font-medium text-slate-400 transition hover:border-brand-500 hover:text-white">
+        <button data-type="Facture" class="pill-btn border border-ivoire-border bg-ivoire px-3.5 py-2 font-display text-xs font-semibold uppercase tracking-[0.15em] text-encre-muted transition hover:border-encre hover:text-encre">
           Factures
         </button>
-        <button data-type="Planning" class="pill-btn rounded-xl border border-white/10 bg-surface-dark px-3.5 py-2 text-xs font-medium text-slate-400 transition hover:border-brand-500 hover:text-white">
+        <button data-type="Planning" class="pill-btn border border-ivoire-border bg-ivoire px-3.5 py-2 font-display text-xs font-semibold uppercase tracking-[0.15em] text-encre-muted transition hover:border-encre hover:text-encre">
           Plannings
         </button>
-        <button data-type="Autre" class="pill-btn rounded-xl border border-white/10 bg-surface-dark px-3.5 py-2 text-xs font-medium text-slate-400 transition hover:border-brand-500 hover:text-white">
+        <button data-type="Autre" class="pill-btn border border-ivoire-border bg-ivoire px-3.5 py-2 font-display text-xs font-semibold uppercase tracking-[0.15em] text-encre-muted transition hover:border-encre hover:text-encre">
           Autres
         </button>
       </div>
 
       <!-- Tri -->
-      <div class="flex items-center gap-2 border-t border-white/10 pt-3 md:border-t-0 md:pt-0">
-        <label for="sort-select" class="whitespace-nowrap text-xs font-bold uppercase tracking-wider text-slate-500">Tri :</label>
-        <select id="sort-select" class="rounded-xl border border-white/10 bg-surface-dark px-3 py-2 text-xs text-white outline-none transition focus:border-brand-500">
+      <div class="flex items-center gap-2 border-t border-ivoire-border pt-3 md:border-t-0 md:pt-0">
+        <label for="sort-select" class="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.2em] text-encre-muted">Tri :</label>
+        <select id="sort-select" class="border border-ivoire-border bg-ivoire px-3 py-2 text-xs text-encre outline-none transition focus:border-bronze">
           <option value="date-desc">Plus récents</option>
           <option value="date-asc">Plus anciens</option>
           <option value="name-asc">Nom (A-Z)</option>
@@ -176,39 +177,37 @@
 
     <!-- Statut / Chargement -->
     <div id="status-container" class="my-6">
-      <div id="status-loading" class="flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-surface-card py-16 text-sm text-slate-400">
-        <svg class="h-6 w-6 animate-spin text-brand-400" fill="none" viewBox="0 0 24 24">
+      <div id="status-loading" class="flex items-center justify-center gap-3 border border-ivoire-border bg-ivoire-card py-16 text-xs text-encre-muted">
+        <svg class="h-5 w-5 animate-spin text-bronze" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
         Chargement de vos documents sécurisés...
       </div>
 
-      <div id="status-error" class="hidden rounded-2xl border border-red-500/30 bg-red-950/20 p-8 text-center text-sm text-red-300">
+      <div id="status-error" class="hidden border border-red-500/30 bg-red-50 p-8 text-center text-xs text-red-800">
         <p id="error-message">Impossible de charger vos documents.</p>
-        <button id="retry-btn" class="mt-4 rounded-xl bg-red-900/50 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white hover:bg-red-900">
+        <button id="retry-btn" class="mt-4 bg-red-900 px-5 py-2.5 font-display text-xs font-bold uppercase tracking-[0.15em] text-white hover:bg-black">
           Réessayer
         </button>
       </div>
     </div>
 
     <!-- Grille de cartes de documents -->
-    <div id="documents-grid" class="hidden grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div id="documents-grid" class="hidden grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       <!-- Cartes injectées par JS -->
     </div>
 
     <!-- État vide -->
-    <div id="empty-state" class="hidden rounded-2xl border border-dashed border-white/20 bg-surface-card/60 px-6 py-20 text-center">
-      <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-500/10 text-brand-400">
-        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
+    <div id="empty-state" class="hidden border border-dashed border-encre/20 bg-ivoire-card px-6 py-20 text-center">
+      <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center bg-encre text-ivoire font-display font-bold text-lg">
+        BBK
       </div>
-      <h3 class="font-heading text-2xl font-bold text-white">Aucun document trouvé</h3>
-      <p class="mt-2 text-xs text-slate-400" id="empty-description">
+      <h3 class="font-display text-2xl font-bold text-encre">Aucun document trouvé</h3>
+      <p class="mt-2 text-xs text-encre-muted" id="empty-description">
         Aucun document ne correspond à vos filtres.
       </p>
-      <button id="reset-filters-btn" class="mt-6 rounded-xl border border-brand-500 px-6 py-3 font-heading text-xs font-bold uppercase tracking-wider text-brand-400 transition hover:bg-brand-500 hover:text-white">
+      <button id="reset-filters-btn" class="mt-6 border border-encre px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-encre hover:bg-encre hover:text-ivoire transition">
         Réinitialiser les filtres
       </button>
     </div>
@@ -216,11 +215,11 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="mt-20 border-t border-white/10 bg-surface-dark py-8 text-xs text-slate-500">
+  <footer class="mt-20 border-t border-ivoire-border bg-ivoire py-8 text-xs text-encre-muted">
     <div class="mx-auto max-w-7xl px-6 flex flex-col justify-between items-center gap-4 md:flex-row">
       <p>Agence BBK &bull; Espace Client Privé &bull; Paris & Île-de-France</p>
       <p>
-        Support : <a href="mailto:contact@agence-bbk.fr" class="text-brand-400 hover:underline">contact@agence-bbk.fr</a>
+        Support : <a href="mailto:contact@agence-bbk.fr" class="text-bronze font-semibold hover:underline">contact@agence-bbk.fr</a>
       </p>
     </div>
   </footer>
@@ -279,22 +278,17 @@
 
     function getTypeBadgeHTML(type) {
       const t = (type || "").toLowerCase();
-      let colorClass = "border-brand-500/30 bg-brand-500/10 text-brand-400";
-      let icon = `
-        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-      `;
+      let colorClass = "border-encre/20 bg-encre/5 text-encre";
 
       if (t.includes("brief") || t.includes("planning")) {
-        colorClass = "border-neon-violet/30 bg-neon-violet/10 text-neon-violet";
+        colorClass = "border-bronze/30 bg-bronze/10 text-bronze";
       } else if (t.includes("facture") || t.includes("devis")) {
-        colorClass = "border-neon-emerald/30 bg-neon-emerald/10 text-neon-emerald";
+        colorClass = "border-stone-800/30 bg-stone-900/10 text-stone-900";
       } else if (t.includes("visuel") || t.includes("image") || t.includes("créa")) {
-        colorClass = "border-neon-cyan/30 bg-neon-cyan/10 text-neon-cyan";
+        colorClass = "border-amber-700/30 bg-amber-700/10 text-amber-800";
       }
 
-      return `<span class="inline-flex items-center gap-1.5 rounded-lg border ${colorClass} px-3 py-1 text-[11px] font-bold uppercase tracking-wider">${icon} ${type || "Document"}</span>`;
+      return `<span class="inline-block border ${colorClass} px-3 py-1 font-display text-[10px] font-bold uppercase tracking-[0.2em]">[ ${type || "Document"} ]</span>`;
     }
 
     function formatDate(dateStr) {
@@ -379,28 +373,26 @@
         documentsGrid.classList.remove("hidden");
         
         documentsGrid.innerHTML = filtered.map(doc => `
-          <div class="group relative flex flex-col justify-between rounded-2xl border border-white/10 bg-surface-card p-6 transition duration-300 hover:border-brand-500/40 hover:bg-surface-cardHover hover:shadow-xl hover:shadow-brand-500/10">
+          <div class="group relative flex flex-col justify-between border border-ivoire-border bg-ivoire-card p-6 transition duration-300 hover:border-encre hover:shadow-lg">
             <div>
               <div class="mb-4 flex items-start justify-between gap-3">
                 ${getTypeBadgeHTML(doc.type)}
-                <span class="text-xs text-slate-500">${formatDate(doc.date)}</span>
+                <span class="text-xs text-encre-muted font-mono">${formatDate(doc.date)}</span>
               </div>
-              <h3 class="font-heading text-lg font-bold text-white transition group-hover:text-brand-400">
+              <h3 class="font-display text-lg font-bold text-encre transition group-hover:text-bronze">
                 ${doc.nom}
               </h3>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+            <div class="mt-8 pt-4 border-t border-ivoire-border flex items-center justify-between">
               ${doc.url ? `
                 <a href="${doc.url}" target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-500 to-neon-violet px-4 py-2 text-xs font-bold uppercase tracking-wider text-white shadow-md transition hover:scale-[1.03]">
-                  <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  Consulter
+                   class="inline-flex items-center gap-2 bg-encre px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.15em] text-ivoire transition hover:bg-bronze">
+                  <span>Consulter le fichier</span>
+                  <span>↗</span>
                 </a>
               ` : `
-                <span class="text-xs italic text-slate-500">Document en cours</span>
+                <span class="text-xs italic text-encre-muted">Document en cours</span>
               `}
             </div>
           </div>
@@ -455,10 +447,10 @@
       if (!btn) return;
 
       document.querySelectorAll(".pill-btn").forEach(b => {
-        b.className = "pill-btn rounded-xl border border-white/10 bg-surface-dark px-3.5 py-2 text-xs font-medium text-slate-400 transition hover:border-brand-500 hover:text-white";
+        b.className = "pill-btn border border-ivoire-border bg-ivoire px-3.5 py-2 font-display text-xs font-semibold uppercase tracking-[0.15em] text-encre-muted transition hover:border-encre hover:text-encre";
       });
 
-      btn.className = "pill-btn active rounded-xl bg-gradient-to-r from-brand-500 to-neon-violet px-4 py-2 text-xs font-bold text-white shadow-md transition";
+      btn.className = "pill-btn active bg-encre px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.15em] text-ivoire transition";
       currentFilterType = btn.dataset.type;
       renderDocuments();
     });
@@ -480,9 +472,9 @@
 
       document.querySelectorAll(".pill-btn").forEach(b => {
         if (b.dataset.type === "ALL") {
-          b.className = "pill-btn active rounded-xl bg-gradient-to-r from-brand-500 to-neon-violet px-4 py-2 text-xs font-bold text-white shadow-md transition";
+          b.className = "pill-btn active bg-encre px-4 py-2 font-display text-xs font-bold uppercase tracking-[0.15em] text-ivoire transition";
         } else {
-          b.className = "pill-btn rounded-xl border border-white/10 bg-surface-dark px-3.5 py-2 text-xs font-medium text-slate-400 transition hover:border-brand-500 hover:text-white";
+          b.className = "pill-btn border border-ivoire-border bg-ivoire px-3.5 py-2 font-display text-xs font-semibold uppercase tracking-[0.15em] text-encre-muted transition hover:border-encre hover:text-encre";
         }
       });
 

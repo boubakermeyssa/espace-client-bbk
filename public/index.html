@@ -3,275 +3,327 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agence BBK — Communication 360° pour marques premium</title>
-  <meta name="description" content="Agence BBK, agence de communication 360° B2B en Île-de-France, dédiée aux marques premium et luxe. Accédez à votre espace client." />
+  <title>Agence BBK — Communication 360° & Studio Créatif</title>
+  <meta name="description" content="Agence BBK, agence de communication 360° B2B en Île-de-France, dédiée aux marques d'exception. Accédez à votre espace client." />
 
-  <!-- Polices -->
+  <!-- Polices ultra modernes & tendance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind via CDN + palette BBK -->
+  <!-- Tailwind via CDN + Système de design BBK 2026 -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            noir: "#0E0E0E",
-            ivoire: "#F5F1EA",
-            accent: "#B8976A",       // champagne / doré
-            "accent-dark": "#9C7C52",
-            gris: "#6B6660"
+            brand: {
+              50: "#EEF2FF",
+              100: "#E0E7FF",
+              400: "#818CF8",
+              500: "#6366F1",
+              600: "#4F46E5",
+              900: "#1E1B4B",
+            },
+            surface: {
+              dark: "#090D16",
+              card: "#111726",
+              border: "rgba(255, 255, 255, 0.08)",
+            },
+            neon: {
+              violet: "#8B5CF6",
+              cyan: "#06B6D4",
+              emerald: "#10B981",
+            }
           },
           fontFamily: {
-            serif: ['"Cormorant Garamond"', "serif"],
+            heading: ['"Plus Jakarta Sans"', "sans-serif"],
             sans: ["Inter", "sans-serif"]
-          },
-          letterSpacing: { luxe: "0.25em" }
+          }
         }
       }
     };
   </script>
 </head>
 
-<body class="bg-ivoire text-noir font-sans antialiased">
+<body class="bg-surface-dark font-sans text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
 
-  <!-- ============ NAVIGATION ============ -->
-  <header class="fixed inset-x-0 top-0 z-50 bg-noir/90 backdrop-blur border-b border-white/10">
-    <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <a href="/" class="font-serif text-2xl tracking-wide text-ivoire">
-        Agence <span class="text-accent">BBK</span>
+  <!-- ============ NAVIGATION DYNAMIQUE ============ -->
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-surface-dark/80 backdrop-blur-xl">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <a href="/" class="flex items-center gap-2 font-heading text-xl font-bold tracking-tight text-white">
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-brand-600 via-neon-violet to-neon-cyan text-xs font-black text-white shadow-lg shadow-brand-500/20">
+          BBK
+        </span>
+        <span>Agence <span class="bg-gradient-to-r from-brand-400 via-neon-violet to-neon-cyan bg-clip-text text-transparent">BBK</span></span>
       </a>
 
-      <ul class="hidden items-center gap-8 text-xs uppercase tracking-luxe text-ivoire/80 md:flex">
-        <li><a href="#services" class="transition hover:text-accent">Services</a></li>
-        <li><a href="#espace" class="transition hover:text-accent">Espace client</a></li>
-        <li><a href="#contact" class="transition hover:text-accent">Contact</a></li>
+      <ul class="hidden items-center gap-8 text-xs font-medium uppercase tracking-wider text-slate-300 md:flex">
+        <li><a href="#services" class="transition hover:text-brand-400">Services</a></li>
+        <li><a href="#espace" class="transition hover:text-brand-400">Espace Client</a></li>
+        <li><a href="#contact" class="transition hover:text-brand-400">Contact</a></li>
       </ul>
 
       <a href="/login"
-         class="hidden border border-accent px-5 py-2 text-xs uppercase tracking-luxe text-accent transition hover:bg-accent hover:text-noir md:inline-block">
-        Mon espace
+         class="hidden rounded-full bg-gradient-to-r from-brand-500 via-neon-violet to-brand-600 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg shadow-brand-500/25 transition duration-300 hover:scale-[1.03] hover:shadow-brand-500/40 md:inline-flex md:items-center md:gap-2">
+        <span>Mon Espace</span>
+        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
       </a>
 
       <!-- Bouton menu mobile -->
-      <button id="menu-btn" class="text-ivoire md:hidden" aria-label="Ouvrir le menu" aria-expanded="false">
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+      <button id="menu-btn" class="rounded-lg p-2 text-slate-300 hover:bg-white/5 md:hidden" aria-label="Ouvrir le menu" aria-expanded="false">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </nav>
 
     <!-- Menu mobile -->
-    <div id="mobile-menu" class="hidden border-t border-white/10 bg-noir md:hidden">
-      <ul class="flex flex-col gap-1 px-6 py-4 text-sm uppercase tracking-luxe text-ivoire/80">
-        <li><a href="#services" class="block py-2 hover:text-accent">Services</a></li>
-        <li><a href="#espace" class="block py-2 hover:text-accent">Espace client</a></li>
-        <li><a href="#contact" class="block py-2 hover:text-accent">Contact</a></li>
-        <li><a href="/login" class="block py-2 text-accent">Mon espace →</a></li>
+    <div id="mobile-menu" class="hidden border-t border-white/10 bg-surface-dark px-6 py-6 md:hidden">
+      <ul class="flex flex-col gap-4 text-sm font-medium uppercase tracking-wider text-slate-300">
+        <li><a href="#services" class="block hover:text-brand-400">Services</a></li>
+        <li><a href="#espace" class="block hover:text-brand-400">Espace Client</a></li>
+        <li><a href="#contact" class="block hover:text-brand-400">Contact</a></li>
+        <li>
+          <a href="/login" class="mt-2 block rounded-xl bg-gradient-to-r from-brand-500 to-neon-violet py-3 text-center text-white font-bold">
+            Connexion Espace Client →
+          </a>
+        </li>
       </ul>
     </div>
   </header>
 
-  <!-- ============ HERO ============ -->
-  <section class="relative flex min-h-screen items-center bg-noir text-ivoire">
-    <!-- Filet décoratif -->
-    <div class="pointer-events-none absolute inset-0 opacity-[0.07]"
-         style="background-image: radial-gradient(circle at 75% 30%, #B8976A 0, transparent 45%);"></div>
+  <!-- ============ HERO SECTION ============ -->
+  <section class="relative flex min-h-screen items-center overflow-hidden pt-28 pb-20">
+    <!-- Glows & Gradient mesh background -->
+    <div class="pointer-events-none absolute top-1/4 left-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-500/20 blur-[130px]"></div>
+    <div class="pointer-events-none absolute top-1/3 right-10 -z-10 h-[400px] w-[400px] rounded-full bg-neon-violet/15 blur-[120px]"></div>
+    <div class="pointer-events-none absolute bottom-10 left-10 -z-10 h-[350px] w-[350px] rounded-full bg-neon-cyan/10 blur-[100px]"></div>
 
-    <div class="relative mx-auto w-full max-w-6xl px-6 pt-24 pb-16">
-      <p class="mb-6 text-xs uppercase tracking-luxe text-accent">Agence de communication 360° · Île-de-France</p>
-      <h1 class="max-w-3xl font-serif text-5xl leading-tight md:text-7xl">
-        L'exigence des marques<br />
-        <em class="text-accent">premium</em>, au service de votre image.
-      </h1>
-      <p class="mt-8 max-w-xl text-base font-light leading-relaxed text-ivoire/70 md:text-lg">
-        Stratégie, identité, contenus et événements : nous accompagnons les maisons et marques d'exception
-        avec une vision globale et une exécution soignée.
-      </p>
-      <div class="mt-12 flex flex-col gap-4 sm:flex-row">
-        <a href="/login"
-           class="inline-block bg-accent px-8 py-4 text-center text-xs font-medium uppercase tracking-luxe text-noir transition hover:bg-ivoire">
-          Accéder à mon espace
-        </a>
-        <a href="#services"
-           class="inline-block border border-ivoire/30 px-8 py-4 text-center text-xs uppercase tracking-luxe text-ivoire transition hover:border-accent hover:text-accent">
-          Découvrir nos services
-        </a>
+    <div class="mx-auto max-w-7xl px-6 pt-12">
+      <div class="max-w-3xl">
+        <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand-400 backdrop-blur-md">
+          <span class="flex h-2 w-2 rounded-full bg-neon-emerald animate-ping"></span>
+          Agence de Communication 360° · Île-de-France
+        </div>
+        
+        <h1 class="font-heading text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl leading-[1.1]">
+          L'audace créative au service des marques <span class="bg-gradient-to-r from-brand-400 via-neon-violet to-neon-cyan bg-clip-text text-transparent">d'exception</span>.
+        </h1>
+        
+        <p class="mt-8 text-lg font-normal leading-relaxed text-slate-300 md:text-xl">
+          Stratégie globale, identité visuelle, création de contenus et événements haute couture : nous façonnons l'image des leaders de demain avec précision et style.
+        </p>
+
+        <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a href="/login"
+             class="inline-flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-brand-500 via-neon-violet to-brand-600 px-8 py-4 font-heading text-sm font-bold uppercase tracking-wider text-white shadow-xl shadow-brand-500/25 transition duration-300 hover:scale-[1.02] hover:shadow-brand-500/40">
+            <span>Accéder à mon espace client</span>
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+          <a href="#services"
+             class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-8 py-4 font-heading text-sm font-semibold uppercase tracking-wider text-slate-200 transition duration-300 hover:border-brand-400 hover:bg-white/10 hover:text-white">
+            Découvrir nos services
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============ SERVICES ============ -->
-  <section id="services" class="py-24 md:py-32">
-    <div class="mx-auto max-w-6xl px-6">
+  <section id="services" class="relative py-28 border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6">
       <div class="mb-16 max-w-2xl">
-        <p class="mb-4 text-xs uppercase tracking-luxe text-accent-dark">Nos expertises</p>
-        <h2 class="font-serif text-4xl md:text-5xl">Une communication pensée à 360°</h2>
-        <p class="mt-6 font-light leading-relaxed text-gris">
-          Chaque expertise dialogue avec les autres pour construire une image cohérente, durable et désirable.
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-400">Nos Expertises</span>
+        <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-white md:text-5xl">
+          Une vision globale 360°
+        </h2>
+        <p class="mt-4 text-base text-slate-400">
+          Chaque discipline s'articule en synergie pour propulser votre notoriété et construire une image mémorable.
         </p>
       </div>
 
-      <div class="grid gap-px bg-noir/10 sm:grid-cols-2 lg:grid-cols-3">
-        <!-- Stratégie -->
-        <article class="group bg-ivoire p-10 transition hover:bg-white">
-          <span class="font-serif text-3xl text-accent">01</span>
-          <h3 class="mt-6 font-serif text-2xl">Stratégie</h3>
-          <p class="mt-4 text-sm font-light leading-relaxed text-gris">
-            Positionnement, plateforme de marque et plan de communication pour donner un cap clair à chaque prise de parole.
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- 01 Stratégie -->
+        <div class="group relative rounded-2xl border border-white/10 bg-surface-card p-8 transition duration-300 hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-2xl hover:shadow-brand-500/10">
+          <span class="font-heading text-4xl font-black text-brand-500/40 group-hover:text-brand-400 transition">01</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold text-white">Stratégie & Marque</h3>
+          <p class="mt-3 text-sm font-normal leading-relaxed text-slate-400">
+            Positionnement de marque, plateforme stratégique et plan d'action de communication pour affirmer votre singularité.
           </p>
-        </article>
-        <!-- Identité visuelle -->
-        <article class="group bg-ivoire p-10 transition hover:bg-white">
-          <span class="font-serif text-3xl text-accent">02</span>
-          <h3 class="mt-6 font-serif text-2xl">Identité visuelle</h3>
-          <p class="mt-4 text-sm font-light leading-relaxed text-gris">
-            Logo, charte graphique et univers de marque qui traduisent votre singularité avec élégance.
+        </div>
+
+        <!-- 02 Identité Visuelle -->
+        <div class="group relative rounded-2xl border border-white/10 bg-surface-card p-8 transition duration-300 hover:-translate-y-1 hover:border-neon-violet/40 hover:shadow-2xl hover:shadow-neon-violet/10">
+          <span class="font-heading text-4xl font-black text-neon-violet/40 group-hover:text-neon-violet transition">02</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold text-white">Identité Visuelle</h3>
+          <p class="mt-3 text-sm font-normal leading-relaxed text-slate-400">
+            Logotypes, typographies sur mesure et chartes graphiques sophistiquées pour marquer les esprits dès le premier regard.
           </p>
-        </article>
-        <!-- Réseaux sociaux -->
-        <article class="group bg-ivoire p-10 transition hover:bg-white">
-          <span class="font-serif text-3xl text-accent">03</span>
-          <h3 class="mt-6 font-serif text-2xl">Réseaux sociaux</h3>
-          <p class="mt-4 text-sm font-light leading-relaxed text-gris">
-            Ligne éditoriale, calendrier de publication et animation de communauté sur les plateformes qui comptent pour vous.
+        </div>
+
+        <!-- 03 Réseaux Sociaux -->
+        <div class="group relative rounded-2xl border border-white/10 bg-surface-card p-8 transition duration-300 hover:-translate-y-1 hover:border-neon-cyan/40 hover:shadow-2xl hover:shadow-neon-cyan/10">
+          <span class="font-heading text-4xl font-black text-neon-cyan/40 group-hover:text-neon-cyan transition">03</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold text-white">Social Media</h3>
+          <p class="mt-3 text-sm font-normal leading-relaxed text-slate-400">
+            Ligne éditoriale captivante, création de contenus vidéo/shorts et animation stratégique de votre communauté.
           </p>
-        </article>
-        <!-- Contenus -->
-        <article class="group bg-ivoire p-10 transition hover:bg-white">
-          <span class="font-serif text-3xl text-accent">04</span>
-          <h3 class="mt-6 font-serif text-2xl">Contenus</h3>
-          <p class="mt-4 text-sm font-light leading-relaxed text-gris">
-            Photo, vidéo, rédaction et supports print ou digitaux, produits avec le soin qu'exige une marque premium.
+        </div>
+
+        <!-- 04 Production de Contenus -->
+        <div class="group relative rounded-2xl border border-white/10 bg-surface-card p-8 transition duration-300 hover:-translate-y-1 hover:border-neon-emerald/40 hover:shadow-2xl hover:shadow-neon-emerald/10">
+          <span class="font-heading text-4xl font-black text-neon-emerald/40 group-hover:text-neon-emerald transition">04</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold text-white">Content Production</h3>
+          <p class="mt-3 text-sm font-normal leading-relaxed text-slate-400">
+            Shootings photos, productions vidéo 4K et rédaction premium adaptés à tous vos supports print & web.
           </p>
-        </article>
-        <!-- Événementiel -->
-        <article class="group bg-ivoire p-10 transition hover:bg-white">
-          <span class="font-serif text-3xl text-accent">05</span>
-          <h3 class="mt-6 font-serif text-2xl">Événementiel</h3>
-          <p class="mt-4 text-sm font-light leading-relaxed text-gris">
-            Lancements, soirées privées et activations de marque : des moments qui marquent vos clients et partenaires.
+        </div>
+
+        <!-- 05 Événementiel -->
+        <div class="group relative rounded-2xl border border-white/10 bg-surface-card p-8 transition duration-300 hover:-translate-y-1 hover:border-brand-500/40 hover:shadow-2xl hover:shadow-brand-500/10">
+          <span class="font-heading text-4xl font-black text-brand-500/40 group-hover:text-brand-400 transition">05</span>
+          <h3 class="mt-4 font-heading text-2xl font-bold text-white">Événementiel & PR</h3>
+          <p class="mt-3 text-sm font-normal leading-relaxed text-slate-400">
+            Soirées privées, pop-up stores et moments d'exception créés sur-mesure pour vos clients et partenaires VIP.
           </p>
-        </article>
+        </div>
+
         <!-- Encart CTA -->
-        <article class="flex flex-col justify-between bg-noir p-10 text-ivoire">
-          <p class="font-serif text-2xl leading-snug">
-            Un projet, une ambition&nbsp;? <em class="text-accent">Parlons-en.</em>
-          </p>
-          <a href="#contact" class="mt-8 text-xs uppercase tracking-luxe text-accent transition hover:text-ivoire">
-            Nous contacter →
+        <div class="flex flex-col justify-between rounded-2xl border border-brand-500/30 bg-gradient-to-br from-brand-900/60 to-surface-card p-8 backdrop-blur-xl">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-brand-400">Votre projet</span>
+            <h3 class="mt-2 font-heading text-2xl font-bold text-white">Envie de réinventer votre image ?</h3>
+          </div>
+          <a href="#contact" class="mt-6 inline-flex items-center gap-2 font-heading text-sm font-bold uppercase tracking-wider text-neon-cyan hover:text-white transition">
+            <span>Parlons-en dès maintenant</span>
+            <span>→</span>
           </a>
-        </article>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============ VOTRE ESPACE CLIENT ============ -->
-  <section id="espace" class="bg-noir py-24 text-ivoire md:py-32">
-    <div class="mx-auto max-w-6xl px-6">
+  <section id="espace" class="relative py-28 border-t border-white/10 bg-gradient-to-b from-surface-dark to-slate-950">
+    <div class="mx-auto max-w-7xl px-6">
       <div class="mb-16 max-w-2xl">
-        <p class="mb-4 text-xs uppercase tracking-luxe text-accent">Votre espace client</p>
-        <h2 class="font-serif text-4xl md:text-5xl">Tous vos documents, au même endroit</h2>
-        <p class="mt-6 font-light leading-relaxed text-ivoire/70">
-          Briefs, visuels, factures, plannings : fini les pièces jointes perdues. Votre espace privé centralise
-          tout ce que nous produisons pour vous.
+        <span class="text-xs font-bold uppercase tracking-widest text-neon-violet">Plateforme Privée</span>
+        <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-white md:text-5xl">
+          Votre Espace Client Centralisé
+        </h2>
+        <p class="mt-4 text-base text-slate-400">
+          Retrouvez tous vos briefs, visuels HD, factures et plannings sur un espace sécurisé en temps réel.
         </p>
       </div>
 
-      <ol class="grid gap-12 md:grid-cols-3">
-        <li class="border-t border-accent/40 pt-8">
-          <span class="font-serif text-5xl text-accent">1</span>
-          <h3 class="mt-4 font-serif text-2xl">BBK dépose</h3>
-          <p class="mt-3 text-sm font-light leading-relaxed text-ivoire/70">
-            À chaque étape du projet, l'agence dépose vos documents dans votre espace dédié.
+      <div class="grid gap-8 md:grid-cols-3">
+        <div class="rounded-2xl border border-white/10 bg-surface-card p-8">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-500/10 text-brand-400 font-heading font-black text-xl mb-6">
+            1
+          </div>
+          <h3 class="font-heading text-xl font-bold text-white">BBK Dépose</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            À chaque livrable (brief, visuel, facture), l'agence ajoute les éléments directement sur votre espace.
           </p>
-        </li>
-        <li class="border-t border-accent/40 pt-8">
-          <span class="font-serif text-5xl text-accent">2</span>
-          <h3 class="mt-4 font-serif text-2xl">Vous recevez vos accès</h3>
-          <p class="mt-3 text-sm font-light leading-relaxed text-ivoire/70">
-            Un email et un code d'accès personnel vous sont transmis : votre espace est strictement privé.
-          </p>
-        </li>
-        <li class="border-t border-accent/40 pt-8">
-          <span class="font-serif text-5xl text-accent">3</span>
-          <h3 class="mt-4 font-serif text-2xl">Vous retrouvez tout</h3>
-          <p class="mt-3 text-sm font-light leading-relaxed text-ivoire/70">
-            Consultez et téléchargez l'ensemble de vos documents, classés et datés, quand vous le souhaitez.
-          </p>
-        </li>
-      </ol>
+        </div>
 
-      <div class="mt-16">
+        <div class="rounded-2xl border border-white/10 bg-surface-card p-8">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-neon-violet/10 text-neon-violet font-heading font-black text-xl mb-6">
+            2
+          </div>
+          <h3 class="font-heading text-xl font-bold text-white">Accès Sécurisé</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Connectez-vous grâce à votre email et votre code confidentiel personnel transmis par l'équipe.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 bg-surface-card p-8">
+          <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-neon-cyan/10 text-neon-cyan font-heading font-black text-xl mb-6">
+            3
+          </div>
+          <h3 class="font-heading text-xl font-bold text-white">Consultez & Téléchargez</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Recherchez et filtrez l'ensemble de vos documents classés et téléchargez-les en un clic.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center md:text-left">
         <a href="/login"
-           class="inline-block bg-accent px-8 py-4 text-xs font-medium uppercase tracking-luxe text-noir transition hover:bg-ivoire">
-          Accéder à mon espace
+           class="inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-brand-500 to-neon-violet px-8 py-4 font-heading text-sm font-bold uppercase tracking-wider text-white shadow-xl shadow-brand-500/20 hover:scale-[1.02] transition">
+          <span>Accéder à mon espace client</span>
+          <span>→</span>
         </a>
       </div>
     </div>
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="py-24 md:py-32">
-    <div class="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2">
-      <div>
-        <p class="mb-4 text-xs uppercase tracking-luxe text-accent-dark">Contact</p>
-        <h2 class="font-serif text-4xl md:text-5xl">Donnons forme à votre prochain projet</h2>
-        <p class="mt-6 font-light leading-relaxed text-gris">
-          Parlez-nous de votre marque et de vos enjeux. Nous revenons vers vous sous 48&nbsp;heures ouvrées.
-        </p>
-      </div>
+  <section id="contact" class="py-28 border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-brand-400">Contact</span>
+          <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-white md:text-5xl">
+            Donnons vie à votre vision
+          </h2>
+          <p class="mt-4 text-base text-slate-400 leading-relaxed">
+            Échangeons sur vos ambitions et découvrez nos recommandations sur-mesure. Notre équipe vous répond sous 24h.
+          </p>
+        </div>
 
-      <div class="flex flex-col justify-center gap-8 border-l border-noir/10 pl-0 md:pl-16">
-        <div>
-          <p class="text-xs uppercase tracking-luxe text-gris">Email</p>
-          <!-- À REMPLACER par l'adresse réelle de l'agence -->
-          <a href="mailto:contact@agence-bbk.fr" class="mt-2 block font-serif text-2xl transition hover:text-accent-dark">
-            contact@agence-bbk.fr
-          </a>
-        </div>
-        <div>
-          <p class="text-xs uppercase tracking-luxe text-gris">Zone d'intervention</p>
-          <p class="mt-2 font-serif text-2xl">Paris &amp; Île-de-France</p>
-        </div>
-        <div>
-          <a href="mailto:contact@agence-bbk.fr?subject=Nouveau%20projet"
-             class="inline-block bg-noir px-8 py-4 text-xs uppercase tracking-luxe text-ivoire transition hover:bg-accent hover:text-noir">
-            Écrire à l'agence
-          </a>
+        <div class="rounded-2xl border border-white/10 bg-surface-card p-8 lg:p-10 space-y-6">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Adresse Email Directe</p>
+            <a href="mailto:contact@agence-bbk.fr" class="mt-1 block font-heading text-2xl font-bold text-white hover:text-brand-400 transition">
+              contact@agence-bbk.fr
+            </a>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Zone d'intervention</p>
+            <p class="mt-1 font-heading text-xl font-bold text-slate-200">Paris, Île-de-France & International</p>
+          </div>
+          <div class="pt-4">
+            <a href="mailto:contact@agence-bbk.fr?subject=Nouveau%20Projet"
+               class="inline-flex w-full justify-center rounded-xl bg-white px-6 py-4 font-heading text-sm font-bold uppercase tracking-wider text-slate-950 transition hover:bg-brand-400 hover:text-white">
+              Écrire à l'agence
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ FOOTER ============ -->
-  <footer class="bg-noir text-ivoire/60">
-    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-12 md:flex-row md:items-center md:justify-between">
-      <p class="font-serif text-xl text-ivoire">Agence <span class="text-accent">BBK</span></p>
-      <ul class="flex flex-wrap gap-6 text-xs uppercase tracking-luxe">
-        <li><a href="#services" class="hover:text-accent">Services</a></li>
-        <li><a href="#espace" class="hover:text-accent">Espace client</a></li>
-        <li><a href="#contact" class="hover:text-accent">Contact</a></li>
-        <li><a href="/login" class="hover:text-accent">Connexion</a></li>
+  <footer class="border-t border-white/10 bg-surface-dark py-12 text-slate-400">
+    <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 text-xs md:flex-row">
+      <div class="flex items-center gap-2 font-heading text-base font-bold text-white">
+        <span class="flex h-6 w-6 items-center justify-center rounded bg-brand-500 text-[10px] text-white font-black">BBK</span>
+        Agence BBK
+      </div>
+      <ul class="flex flex-wrap items-center gap-6 font-medium uppercase tracking-wider">
+        <li><a href="#services" class="hover:text-white">Services</a></li>
+        <li><a href="#espace" class="hover:text-white">Espace Client</a></li>
+        <li><a href="#contact" class="hover:text-white">Contact</a></li>
+        <li><a href="/login" class="hover:text-brand-400">Connexion</a></li>
       </ul>
-      <p class="text-xs">© <span id="year"></span> Agence BBK — Tous droits réservés</p>
+      <p>© <span id="year"></span> Agence BBK — Tous droits réservés.</p>
     </div>
   </footer>
 
   <script>
-    // Menu mobile
     const btn = document.getElementById("menu-btn");
     const menu = document.getElementById("mobile-menu");
     btn.addEventListener("click", () => {
       const open = menu.classList.toggle("hidden") === false;
       btn.setAttribute("aria-expanded", open);
     });
-    menu.querySelectorAll("a").forEach((a) =>
-      a.addEventListener("click", () => menu.classList.add("hidden"))
-    );
-    // Année du footer
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>

@@ -17,6 +17,8 @@ espace-client-bbk/
 │   ├── backoffice.html     # Back-Office agence (/backoffice)
 │   └── test-documents.html # Tableau de test d'administration (/test-documents)
 ├── server.js               # Serveur Express & API REST
+├── DEPLOYMENT.md           # Guide de mise en ligne & SSL (Lot 6)
+├── .env.example            # Exemples de variables d'environnement
 ├── package.json
 └── README.md
 ```
@@ -29,7 +31,7 @@ Prérequis : Node.js 18 ou plus.
 npm install
 ```
 
-Les variables suivantes peuvent être définies dans l'environnement (ou dans les Secrets Replit) :
+Les variables suivantes peuvent être définies dans l'environnement (ou dans les Secrets Replit / Render) :
 
 - `AIRTABLE_TOKEN` : token d'accès à l'API Airtable
 - `AIRTABLE_BASE_ID` : identifiant de la base Airtable
@@ -51,7 +53,7 @@ Puis ouvrir http://localhost:3000 (ou le port défini dans la variable `PORT`).
 - **Email :** `demo@agence-bbk.fr`
 - **Code :** `bbk2026`
 
-### Identifiants Back-Office Agence (Lot 5) :
+### Identifiants Back-Office Agence :
 - **URL :** `/admin/login` (ou `/backoffice`)
 - **Email :** `admin@agence-bbk.fr`
 - **Mot de passe :** `bbk_admin_2026`
@@ -65,10 +67,13 @@ Puis ouvrir http://localhost:3000 (ou le port défini dans la variable `PORT`).
 | **Lot 3** | Authentification email + code d'accès, sessions Express (`SESSION_SECRET`), déconnexion | ✅ Livré |
 | **Lot 4** | Espace client : consultation des documents du client connecté, recherche, filtres par type, tri et téléchargements | ✅ Livré |
 | **Lot 5** | Back-office agence : dépôt de documents et gestion des accès clients | ✅ Livré |
-| **Lot 6** | Mise en ligne (hébergement, variables d'environnement, nom de domaine) | À venir |
+| **Lot 6** | Mise en ligne (hébergement, variables d'environnement, nom de domaine, HTTPS) | ✅ Livré |
+
+Pour déployer en production et associer votre nom de domaine `client.agence-bbk.fr`, consultez le fichier [DEPLOYMENT.md](file:///Users/meyssa/Desktop/espace-client-bbk/DEPLOYMENT.md).
 
 ## À personnaliser
 
 - L'adresse `contact@agence-bbk.fr` dans les pages HTML est provisoire : la remplacer par l'adresse réelle de l'agence.
+
 
 

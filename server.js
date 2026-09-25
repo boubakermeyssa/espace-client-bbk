@@ -11,6 +11,11 @@ const PUBLIC_DIR = path.join(__dirname, "public");
 const AIRTABLE_API_URL = "https://api.airtable.com/v0";
 const SESSION_SECRET = process.env.SESSION_SECRET || "bbk_secret_key_espace_client_2026";
 
+// Configuration pour les reverse proxies en production (Render, Replit, Vercel, Nginx)
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+}
+
 // Middleware pour analyser le corps des requêtes (JSON et formulaires)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,11 +27,21 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // passer à true si HTTPS
+      secure: process.env.NODE_ENV === "production", // HTTPS en production
       maxAge: 24 * 60 * 60 * 1000, // 24h
     },
   })
 );
+
+// Route de contrôle de santé (Health check pour l'hébergement)
+app.get("/health", (req, res) => {
+  res.json({
+    status: "ok",
+    app: "Espace Client BBK",
+    timestamp: new Date().toISOString(),
+    env: process.env.NODE_ENV || "development",
+  });
+});
 
 function getAirtableConfig() {
   const { AIRTABLE_TOKEN, AIRTABLE_BASE_ID } = process.env;

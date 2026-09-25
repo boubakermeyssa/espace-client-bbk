@@ -1,0 +1,16 @@
+{
+  "name": "espace-client-bbk",
+  "version": "0.1.0",
+  "description": "Espace client de l'Agence BBK — landing page publique et espace privé de consultation des documents clients.",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

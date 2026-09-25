@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion — Espace client BBK</title>
+  <meta name="robots" content="noindex" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            noir: "#0E0E0E",
+            ivoire: "#F5F1EA",
+            accent: "#B8976A",
+            "accent-dark": "#9C7C52",
+            gris: "#6B6660"
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', "serif"],
+            sans: ["Inter", "sans-serif"]
+          },
+          letterSpacing: { luxe: "0.25em" }
+        }
+      }
+    };
+  </script>
+</head>
+
+<body class="min-h-screen bg-noir font-sans text-ivoire antialiased">
+  <div class="grid min-h-screen md:grid-cols-2">
+
+    <!-- Colonne visuelle (masquée sur mobile) -->
+    <aside class="relative hidden flex-col justify-between overflow-hidden border-r border-white/10 p-12 md:flex">
+      <div class="pointer-events-none absolute inset-0 opacity-[0.08]"
+           style="background-image: radial-gradient(circle at 30% 70%, #B8976A 0, transparent 50%);"></div>
+      <a href="/" class="relative font-serif text-2xl tracking-wide">
+        Agence <span class="text-accent">BBK</span>
+      </a>
+      <div class="relative">
+        <p class="font-serif text-4xl leading-snug">
+          Vos briefs, visuels, factures et plannings.<br />
+          <em class="text-accent">Réunis en un seul lieu.</em>
+        </p>
+      </div>
+      <p class="relative text-xs uppercase tracking-luxe text-ivoire/40">Espace client privé</p>
+    </aside>
+
+    <!-- Formulaire -->
+    <main class="flex items-center justify-center px-6 py-16">
+      <div class="w-full max-w-sm">
+        <a href="/" class="mb-12 block font-serif text-2xl md:hidden">
+          Agence <span class="text-accent">BBK</span>
+        </a>
+
+        <p class="mb-3 text-xs uppercase tracking-luxe text-accent">Espace client</p>
+        <h1 class="font-serif text-4xl">Connexion</h1>
+        <p class="mt-3 text-sm font-light text-ivoire/60">
+          Saisissez l'email et le code d'accès transmis par l'agence.
+        </p>
+
+        <!-- Lot 1 : aucune logique d'authentification (branchée au Lot 3) -->
+        <form id="login-form" class="mt-10 space-y-6" novalidate>
+          <div>
+            <label for="email" class="mb-2 block text-xs uppercase tracking-luxe text-ivoire/60">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required
+                   placeholder="vous@votremarque.com"
+                   class="w-full border border-white/15 bg-transparent px-4 py-3 text-sm text-ivoire placeholder-ivoire/30 outline-none transition focus:border-accent" />
+          </div>
+
+          <div>
+            <label for="code" class="mb-2 block text-xs uppercase tracking-luxe text-ivoire/60">Code d'accès</label>
+            <input id="code" name="code" type="password" autocomplete="current-password" required
+                   placeholder="••••••••"
+                   class="w-full border border-white/15 bg-transparent px-4 py-3 text-sm text-ivoire placeholder-ivoire/30 outline-none transition focus:border-accent" />
+          </div>
+
+          <button type="submit"
+                  class="w-full bg-accent py-4 text-xs font-medium uppercase tracking-luxe text-noir transition hover:bg-ivoire">
+            Accéder à mon espace
+          </button>
+
+          <p id="form-message" class="hidden text-center text-sm text-accent" role="status"></p>
+        </form>
+
+        <p class="mt-10 text-xs font-light leading-relaxed text-ivoire/50">
+          Pas encore d'accès ou code oublié ?
+          <a href="mailto:contact@agence-bbk.fr?subject=Acc%C3%A8s%20espace%20client" class="text-accent underline-offset-4 hover:underline">
+            Contactez l'agence
+          </a>.
+        </p>
+
+        <a href="/" class="mt-6 inline-block text-xs uppercase tracking-luxe text-ivoire/40 transition hover:text-accent">
+          ← Retour au site
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Lot 1 : on bloque l'envoi et on affiche un message d'attente.
+    document.getElementById("login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const msg = document.getElementById("form-message");
+      msg.textContent = "La connexion sera disponible très prochainement.";
+      msg.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
